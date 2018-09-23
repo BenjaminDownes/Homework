@@ -30,6 +30,10 @@ return node name
 return path's total duration
 
 ## get_path()
-return single string of format "A, B, C, D"?
+private int duration
 
-or return list of strings?
+private list path
+
+return list of strings containing node names
+
+e.g. ["a", "b", "c"]
