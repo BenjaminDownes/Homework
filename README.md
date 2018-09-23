@@ -25,3 +25,11 @@ return node name
 
 ---
 # class Path()
+
+## get_duration()
+return path's total duration
+
+## get_path()
+return single string of format "A, B, C, D"?
+
+or return list of strings?
