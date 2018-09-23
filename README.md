@@ -1,19 +1,24 @@
 # class Node(name, duration, dependencies)
 
 private int duration
+
 private list dependencies
+
 private string name
 
-##get_paths()
-    return list of path objects
+## get_paths()
+    * return list of path objects
 
-##get_dependencies()
-##set_dependencies()
+## get_dependencies()
 
-##add_dependency()
-##remove_dependency()
+## set_dependencies()
 
-##get_name()
-##set_name()
+## add_dependency()
+
+## remove_dependency()
+
+## get_name()
+
+## set_name()
 
 # class Path()
