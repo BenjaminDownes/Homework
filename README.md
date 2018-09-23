@@ -7,7 +7,7 @@ private list dependencies
 private string name
 
 ## get_paths()
-    * return list of path objects
+return list of path objects
 
 ## get_dependencies()
 
