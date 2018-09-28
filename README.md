@@ -2,7 +2,7 @@
 
 private int duration
 
-private list dependencies
+private list child
 
 private string name
 
