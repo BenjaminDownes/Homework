@@ -1,0 +1,74 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JLabel;
+
+public class Node_Inputs {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Node_Inputs window = new Node_Inputs();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Node_Inputs() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.setBounds(310, 215, 97, 25);
+		frame.getContentPane().add(btnReset);
+		
+		JButton button = new JButton("Exit");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		button.setBounds(198, 215, 97, 25);
+		frame.getContentPane().add(button);
+		
+		JButton btnSubmit = new JButton("Submit");
+		btnSubmit.setBounds(279, 144, 97, 25);
+		frame.getContentPane().add(btnSubmit);
+		
+		JLabel lblActivityName = new JLabel("Activity Name");
+		lblActivityName.setBounds(12, 13, 97, 16);
+		frame.getContentPane().add(lblActivityName);
+		
+		JLabel label = new JLabel("Duration");
+		label.setBounds(139, 13, 97, 16);
+		frame.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("Dependencies");
+		label_1.setBounds(248, 13, 97, 16);
+		frame.getContentPane().add(label_1);
+	}
+}
+
