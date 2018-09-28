@@ -1,6 +1,22 @@
 # class Network()
 
-## 
+## add_node(name, duration, parents)
+Adds a child node to the specifed parent node(s). This new node has no chidren specifed.
+
+## insert_node(name, duration, parents, children)?
+Inserts a node between other nodes. Parent and child nodes would need to be specified.
+
+## remove_node(name)
+return true/false
+
+## isEmpty()
+return true/false
+
+## get_paths()
+return list of path objects
+
+Solver() method
+
 
 # class Node(name, duration, dependencies)
 
