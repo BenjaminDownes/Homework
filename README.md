@@ -26,6 +26,10 @@ return node name
 ---
 # class Path()
 
+## add_node(string)
+
+## remove_node(string)
+
 ## get_duration()
 return path's total duration
 
