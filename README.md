@@ -2,21 +2,21 @@
 
 private int duration
 
-private list dependencies
+private list child
 
 private string name
 
 ## get_paths()
 return list of path objects
 
-## get_dependencies()
+## get_children()
 return list of node objects
 
-## set_dependencies(list of node objects)
+## set_children(list of node objects)
 
-## add_dependency(node object)
+## add_child(node object)
 
-## remove_dependency(node object)
+## remove_child(node object)
 
 ## get_name()
 return node name
