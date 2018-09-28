@@ -1,3 +1,7 @@
+# class Network()
+
+## 
+
 # class Node(name, duration, dependencies)
 
 private int duration
