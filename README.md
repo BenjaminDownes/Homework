@@ -1,6 +1,6 @@
 # class Network()
 
-## add_node(name, duration, parents)
+## append_node(name, duration, parents)
 Adds a child node to the specifed parent node(s). This new node has no chidren specifed.
 
 ## insert_node(name, duration, parents, children)?
