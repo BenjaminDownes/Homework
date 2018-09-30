@@ -84,12 +84,24 @@ public class Node_Inputs {
 			System.out.println("Name = " + node.get_name());
 			
 			Node node2 = new Node("B", 3);
+			Node node3 = new Node("C", 5);
 			
 			ArrayList<Node> children = new ArrayList<>();
 			children.add(node2);
+			children.add(node3);
+			
 			node.set_children(children);
 			
-			System.out.print(node.get_children().toString());
+			System.out.println(node.get_children());
+			System.out.print(node.get_children().get(0).get_name() + ", ");
+			System.out.println(node.get_children().get(1).get_name());
+			
+			Node node4 = new Node("D", 3);
+			node.add_child(node4);
+			System.out.println(node.get_children());
+			
+			node.remove_child(node3);
+			System.out.println(node.get_children());
 		}
 		
 	}
