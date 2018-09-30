@@ -24,7 +24,7 @@ public class Network {
     		start = new Node();
     	}
     	
-    	//todo
+    	//TODO
     }
     
     public void insert_node(String name, int duration, ArrayList<String> parents, ArrayList<String> children) {
