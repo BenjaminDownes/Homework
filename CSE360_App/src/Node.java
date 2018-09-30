@@ -54,7 +54,7 @@ public class Node {
 		name = n;
 	}
 	
-	public String get_duration() {
+	public int get_duration() {
 		return duration;
 	}
 
