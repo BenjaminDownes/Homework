@@ -53,4 +53,12 @@ public class Node {
 	public void set_name(String n) {
 		name = n;
 	}
+	
+	public String get_duration() {
+		return duration;
+	}
+
+	public void set_duration(int d) {
+		duration = d;
+	}
 }
