@@ -9,12 +9,14 @@ public class Node {
 	public Node() {
 		name = "";
 		duration = 0;
+		child_nodes = new ArrayList<Node>();
 	}
 
 	//constructor
 	public Node(String n, int d) {
 		name = n;
 		duration = d;
+		child_nodes = new ArrayList<Node>();
 	}
 
 	//returns list of child nodes
@@ -39,7 +41,7 @@ public class Node {
 			return false;
 		else
 			//returns true if list contained the specific element
-			return child_node.remove(child);
+			return child_nodes.remove(child);
 	}
 	
 	//returns name of node
