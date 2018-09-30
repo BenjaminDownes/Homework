@@ -70,5 +70,12 @@ public class Node_Inputs {
 		label_1.setBounds(248, 13, 97, 16);
 		frame.getContentPane().add(label_1);
 	}
+	
+	public void node_test(int tCase) {
+		if(tCase == 1) {
+			
+		}
+		
+	}
 }
 
