@@ -10,13 +10,28 @@ public class Path {
     	path = new ArrayList<>();
     }
     
-    public void add_node(String name) {
-    	//todo
+    //returns false if node to be added already exists on the path
+    public boolean append_node(Node n) {
+        if(path.contains(n.get_name()))
+            return false;
+        else {
+	    duration += n.get_duration();
+	    path.add(n.get_name());
+            return true;
+        }
     }
     
-    public boolean remove_node(String name) {
-    	//todo
-    	return false; //Placeholder
+    //returns false if node could not be removed (doesn't exist in path)
+    public boolean remove_node(Node n) {
+    	if(path.isEmpty())
+            return false;
+    	else if(!path.contains(n.get_name()))
+            return false;
+        else {
+            duration -= n.get_duration();
+            path.remove(n.get_name());
+            return true;
+        }
     }
     
     public int get_duration() {
