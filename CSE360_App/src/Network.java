@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+//TODO
+// Check for duplicate end nodes
+
 
 public class Network {
 	
@@ -35,7 +38,7 @@ public class Network {
     			start = new Node(name, duration);
     		}else { //It already exists, can't have multiple start nodes!
     			//TODO
-    			//Throw ERROR
+    			return error.orphaned_node;
     		}
     	}
     	else {
@@ -46,10 +49,17 @@ public class Network {
     	}
     	map.put(name, node); //Add new node to map
     	size++; //Increment network size
-    	
-    	return 0;
+    	update_paths(node);
+    	return error.no_error;
     	
     	//TODO
+    }
+    private int update_paths(Node node) {
+    	//List of paths for given node
+    	ArrayList<Path> paths = pathMap.get(node);
+    	//TODO
+    	
+    	return error.no_error;
     }
     
 //    public void insert_node(String name, int duration, ArrayList<String> parents, ArrayList<String> children) {

@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+//TODO
+// Check for loops
+
 
 public class Path {
     protected int duration; //Total duration of path
@@ -37,6 +40,9 @@ public class Path {
     public int get_duration() {
     	return duration;
     }
+    
+    public ArrayList<String> get_ //Returns a list with the names of each node in the path
+    // E.G. ["a", "b", "c"]
     
     public ArrayList<Node> get_path(){
     	return path;
