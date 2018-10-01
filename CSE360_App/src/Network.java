@@ -3,6 +3,7 @@ import java.util.HashMap;
 
 public class Network {
 	
+	private Errors error = new Errors();
 	protected int size; //Number of nodes in network
 	private Node start; //Start node of network
 	
@@ -11,6 +12,7 @@ public class Network {
 	//E.G. paths = [Path1, Path2, Path3]
 	
 	private HashMap<String, Node> map; //Keys are node names, values are corresponding node objects
+	private HashMap<Node, ArrayList<Path>> pathMap;
 	
 	
     public Network() {
@@ -18,10 +20,13 @@ public class Network {
     	paths = new ArrayList<>(); // Array of path objects
     	start = null;
     	map = new HashMap<String, Node>();
+    	pathMap = new HashMap<Node, ArrayList<Path>>();
     }
     
-    public void add_node(String name, int duration, ArrayList<String> parents) {
-    	
+    public int add_node(String name, int duration, ArrayList<String> parents) {
+    	if (map.containsKey(name)) {
+    		return error.duplicate_node;
+    	}
     	Node node = new Node(name, duration);
     	if(parents.isEmpty()) {
     		//If parents is empty then assume this node is the start node.
@@ -42,22 +47,24 @@ public class Network {
     	map.put(name, node); //Add new node to map
     	size++; //Increment network size
     	
+    	return 0;
+    	
     	//TODO
     }
     
-    public void insert_node(String name, int duration, ArrayList<String> parents, ArrayList<String> children) {
-    	//TODO
-    }
+//    public void insert_node(String name, int duration, ArrayList<String> parents, ArrayList<String> children) {
+//    	//TODO
+//    }
     
-    public void link_nodes(String parent, String child) {
-    	//TODO
-    	map.get(parent).add_child(map.get(child));
-    }
+//    public void link_nodes(String parent, String child) {
+//    	//TODO
+//    	map.get(parent).add_child(map.get(child));
+//    }
     
-    public boolean remove_node(String name) {
-    	//TODO
-    	return false; //Placeholder
-    }
+//    public boolean remove_node(String name) {
+//    	//TODO
+//    	return false; //Placeholder
+//    }
     
     public boolean isEmpty() {
     	return size == 0;

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Path {
     protected int duration; //Total duration of path
-    protected ArrayList<String> path; //Stores a list of path names in order from start to end.
+    protected ArrayList<Node> path; //Stores a list of path names in order from start to end.
     //E.G. path = ["Node a", Node b", "Node c"]
     
     public Path() {
@@ -12,11 +12,11 @@ public class Path {
     
     //returns false if node to be added already exists on the path
     public boolean append_node(Node n) {
-        if(path.contains(n.get_name()))
+        if(path.contains(n))
             return false;
         else {
 	    duration += n.get_duration();
-	    path.add(n.get_name());
+	    path.add(n);
             return true;
         }
     }
@@ -25,11 +25,11 @@ public class Path {
     public boolean remove_node(Node n) {
     	if(path.isEmpty())
             return false;
-    	else if(!path.contains(n.get_name()))
+    	else if(!path.contains(n))
             return false;
         else {
             duration -= n.get_duration();
-            path.remove(n.get_name());
+            path.remove(n);
             return true;
         }
     }
@@ -38,7 +38,7 @@ public class Path {
     	return duration;
     }
     
-    public ArrayList<String> get_path(){
+    public ArrayList<Node> get_path(){
     	return path;
     }
 }
