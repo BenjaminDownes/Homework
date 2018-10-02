@@ -20,6 +20,9 @@ public class Network {
 	private HashMap<Node, ArrayList<Path>> pathMap; //Associates a node with a list of paths
 	
 	
+    /**
+     * 
+     */
     public Network() {
     	size = 0;
     	paths = new ArrayList<>(); // Array of path objects
@@ -29,6 +32,12 @@ public class Network {
     	pathMap = new HashMap<Node, ArrayList<Path>>();
     }
     
+    /**
+     * @param name
+     * @param duration
+     * @param parents
+     * @return an error code associated with Errors.java
+     */
     public int add_node(String name, int duration, ArrayList<String> parents) {
     	if (map.containsKey(name)) {
     		return error.duplicate_node;
@@ -57,6 +66,11 @@ public class Network {
     	
     	//TODO
     }
+    /**
+     * @param node to evaluate
+     * @param Arraylisy containing parent nodes of node
+     * @return an error code associated with Errors.java
+     */
     private int update_paths(Node node, ArrayList<String> parents) {
     	//Store paths relevant to node
     	LinkedHashSet<Path> paths = new LinkedHashSet<Path>(); //Use a set to avoid duplicates
@@ -96,6 +110,9 @@ public class Network {
     	return size == 0;
     }
     
+    /**
+     * @return an ArrayList of paths in the network
+     */
     public ArrayList<Path> get_paths() {
     	return paths;
     }

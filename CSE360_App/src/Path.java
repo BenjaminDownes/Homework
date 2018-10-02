@@ -41,7 +41,7 @@ public class Path {
     	return duration;
     }
     
-    public ArrayList<String> get_ //Returns a list with the names of each node in the path
+    //public ArrayList<String> get_ //Returns a list with the names of each node in the path
     // E.G. ["a", "b", "c"]
     
     public ArrayList<Node> get_path(){
