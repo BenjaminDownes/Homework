@@ -130,6 +130,10 @@ public class Network {
     	return errorCode;
     }
     
+    public Node get_node(String name) {
+    	return map.get(name);
+    }
+    
     public boolean isEmpty() {
     	return size == 0;
     }
@@ -157,14 +161,15 @@ public class Network {
      * Path1(duration):Node1->Node2->Node3
      */
     public void printInfo() {
-    	System.out.println("Network Debug Info:");
+    	System.out.println("Network Debug Info:\n");
     	
     	// Print each node
-    	System.out.println("Nodes:");
+    	System.out.println("Nodes: [NodeName(Duration): Child1, Child2, Child3]\n");
+    	System.out.println("Start node: " + start.get_name()+ "[" + start + "]\n");
     	for(HashMap.Entry<String, Node> pair: map.entrySet()) {
     		Node node = pair.getValue();
-    		String output = ""; //Create output string
-    		output = node.get_name(); //Add name
+    		String output = "•"; //Create output string
+    		output += node.get_name(); //Add name
     		output += "(" + node.get_duration() + "): ";
     		//Print Child Nodes:
     		ArrayList<Node> nodeList = node.get_children();
@@ -180,11 +185,11 @@ public class Network {
     	
     	
     	// Print each path
-    	System.out.println("Paths:");
+    	System.out.println("Paths: [PathX(duration):Node1->Node2->Node3]\n");
     	ArrayList<Path> tmpPathList = get_paths();
     	for(int i = 0; i<tmpPathList.size();i++) {
     		Path path = tmpPathList.get(i); //Get current path object
-    		String output = ""; //Create output string
+    		String output = "•"; //Create output string
     		output += "Path" + i + "(" + path.get_duration() + "):";
     		for(int j = 0;j<path.path.size();j++) {// Loop through each node in path
     			output += path.path.get(j).get_name();

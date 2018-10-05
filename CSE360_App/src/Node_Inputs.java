@@ -71,7 +71,7 @@ public class Node_Inputs {
 		label_1.setBounds(248, 13, 97, 16);
 		frame.getContentPane().add(label_1);
 		
-		node_test(2);
+		node_test(3);
 	}
 	
 	public void node_test(int tCase) {
@@ -145,7 +145,15 @@ public class Node_Inputs {
 			
 			network.printInfo();
 		}
+		else if (tCase == 3) {
+			randomNetworkGenerator networkGenerator = new randomNetworkGenerator();
+			Network network = new Network();
+			
+			network = networkGenerator.generate_network(10);
+			network.printInfo();
+		}
 		
 	}
+	
 }
 
