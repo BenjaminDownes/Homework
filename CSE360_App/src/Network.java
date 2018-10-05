@@ -13,7 +13,7 @@ public class Network {
 	private Node start; //Start node of network
 	private Node end; //End node of network
 	
-	private static ArrayList<Path> paths; //Stores all paths in the network.
+	private static LinkedHashSet<Path> paths; //Stores all paths in the network.
 	//Each path is an object that stores a list of path names in order from start to end.
 	//E.G. paths = [Path1, Path2, Path3]
 	
@@ -26,7 +26,7 @@ public class Network {
      */
     public Network() {
     	size = 0;
-    	paths = new ArrayList<>(); // Array of path objects
+    	paths = new LinkedHashSet<Path>(); // Array of path objects
     	start = null;
     	end = null;
     	map = new HashMap<String, Node>();
@@ -99,7 +99,7 @@ public class Network {
     	// Now all relevant paths are added to localPaths
     	
     	// evaluate each path in localPaths
-    	Path[] pathArray = new Path[localPaths.size()]; // create array to iterate through each path
+    	Path[] pathArray = new Path[localPaths.size()]; // create array from localPaths to iterate through each path
     	localPaths.toArray(pathArray); //Copy path linked hash set to the array
     	for(int i=0; i<pathArray.length;i++) {
     		if(!pathArray[i].append_node(node)) {//Append node to path at position i
@@ -110,10 +110,13 @@ public class Network {
     	ArrayList<Path> pathList = new ArrayList<Path>(Arrays.asList(pathArray));//Convert LinkedHashSet to arraylist
     	pathMap.put(node, pathList); //Replace old path list with updated path list for given node
     	
+    	//Update global paths set
+    	paths.addAll(localPaths);
+    	
     	//Check if node is the end node
     	//If node has the same list of paths as Network.paths then it contains all paths
     	//and is therefore the end node.
-    	if(Network.paths.equals(pathMap.get(node))) {
+    	if(Network.paths.equals(localPaths)) {
     		if(end == null) {//There is no end node set
     			end = node; //The current node is set as the end node
     		}
@@ -134,7 +137,10 @@ public class Network {
      * @return an ArrayList of paths in the network
      */
     public ArrayList<Path> get_paths() {
-    	return paths;
+    	//Convert paths to ArrayList
+    	ArrayList<Path> pathsList = new ArrayList<Path>(paths);
+    	
+    	return pathsList;
     }
     
     
@@ -171,13 +177,15 @@ public class Network {
     	
     	// Print each path
     	System.out.println("Paths:");
-    	for(int i = 0; i<paths.size();i++) {
-    		Path path = paths.get(i); //Get current path object
+    	ArrayList<Path> tmpPathList = get_paths();
+    	System.out.println(paths.toString());
+    	for(int i = 0; i<tmpPathList.size();i++) {
+    		Path path = tmpPathList.get(i); //Get current path object
     		String output = ""; //Create output string
     		output += "Path" + i + "(" + path.get_duration() + "):";
     		for(int j = 0;j<path.path.size();j++) {// Loop through each node in path
     			output += path.path.get(j).get_name();
-    			if(j == paths.size() - 2) {//Check if -> should be added
+    			if(j == paths.size() - 1) {//Check if -> should be added
     				output += "->";
     			}
     		}
