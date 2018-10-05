@@ -165,11 +165,14 @@ public class Network {
     		Node node = pair.getValue();
     		String output = ""; //Create output string
     		output = node.get_name(); //Add name
-    		output = output + "(" + node.get_duration() + "): ";
+    		output += "(" + node.get_duration() + "): ";
     		//Print Child Nodes:
     		ArrayList<Node> nodeList = node.get_children();
     		for(int i=0; i < nodeList.size();i++) {
-    			output = output + nodeList.get(i).get_name() + ", ";
+    			output += nodeList.get(i).get_name();
+    			if(i != nodeList.size() - 1) {
+    				output += ", ";
+    			}
     		}
     		System.out.println(output); //Print the current node's info
     	}
@@ -185,7 +188,7 @@ public class Network {
     		output += "Path" + i + "(" + path.get_duration() + "):";
     		for(int j = 0;j<path.path.size();j++) {// Loop through each node in path
     			output += path.path.get(j).get_name();
-    			if(j == paths.size() - 1) {//Check if -> should be added
+    			if(j != paths.size() - 1) {//Check if -> should be added
     				output += "->";
     			}
     		}

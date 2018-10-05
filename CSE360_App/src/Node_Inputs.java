@@ -132,6 +132,16 @@ public class Node_Inputs {
 			network.printPaths();	
 			System.out.println("-------------------------------------------------");
 			
+			System.out.println("Add node 'c', duration 4, parents: 'a'\n");
+			errorCode = network.add_node("c", 4, parents);
+			System.out.println("Network.add('c') error code: " + errorCode + "\n");
+			
+			network.printMap();
+			network.printPathMap();
+			network.printPaths();	
+			System.out.println("-------------------------------------------------");
+
+			
 			
 			network.printInfo();
 		}
