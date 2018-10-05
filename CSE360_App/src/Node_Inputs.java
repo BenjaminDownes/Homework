@@ -118,17 +118,19 @@ public class Node_Inputs {
 			
 			
 			network.printMap();
-			
 			network.printPathMap();
+			network.printPaths();
+			System.out.println("-------------------------------------------------");
 			
 			System.out.println("Add node 'b', duration 3, parents: 'a'\n");
 			parents.add("a");
 			errorCode = network.add_node("b", 3, parents);
 			System.out.println("Network.add('b') error code: " + errorCode + "\n");
+			
 			network.printMap();
-			
 			network.printPathMap();
-			
+			network.printPaths();	
+			System.out.println("-------------------------------------------------");
 			
 			
 			network.printInfo();

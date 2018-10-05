@@ -88,6 +88,7 @@ public class Network {
     			path.append_node(parent_node);
     			path.append_node(node);
     			localPaths.add(path);
+    			pathMap.get(parent_node).add(path);
     		}
     		else { //Parent is not start node and already part of a path
     			//Add all paths associated with parrent_node to localPaths set
@@ -178,7 +179,6 @@ public class Network {
     	// Print each path
     	System.out.println("Paths:");
     	ArrayList<Path> tmpPathList = get_paths();
-    	System.out.println(paths.toString());
     	for(int i = 0; i<tmpPathList.size();i++) {
     		Path path = tmpPathList.get(i); //Get current path object
     		String output = ""; //Create output string
@@ -223,6 +223,11 @@ public class Network {
 	          
 		} 
 		System.out.println("\n");
+	}
+	
+	public void printPaths() {
+		System.out.println("paths:");
+		System.out.println(paths.toString() + "\n");
 	}
     
  // The following methods are lower priority as they are not necessary for phase 1.
