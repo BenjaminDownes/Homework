@@ -193,7 +193,9 @@ public class Network {
     	}
     	System.out.println("\n");
     }
-    
+    /**
+     * Shows the relations between node names and node objects stored in map
+     */
     public void printMap() {
     	System.out.println("Map:");
     	for (String name: map.keySet()){
@@ -204,7 +206,9 @@ public class Network {
     	} 
     	System.out.println("\n");
 	}
-    
+    /**
+	 * Shows the relations between node objects and path lists stored in pathMap
+	 */
 	public void printPathMap() {
 		System.out.println("pathMap:");
 		for (Node name: pathMap.keySet()){
