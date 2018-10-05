@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 //TODO
 // Check for duplicate end nodes
@@ -47,19 +48,21 @@ public class Network {
     		//If parents is empty then assume this node is the start node.
         	//If there is already a start node throw an error.
     		if(start == null) { //Check if start node is empty
-    			start = new Node(name, duration);
+    			start = node;
     		}else { //It already exists, can't have multiple start nodes!
     			//TODO
     			return error.orphaned_node;
     		}
     	}
-    	else {
+    	else {//add child node to parent node
     		for(int i=0; i < parents.size(); i++) {
-    			//add child node to parent node
+    			//Use map to find each parent node and add the current node as their child
     			map.get(parents.get(i)).add_child(node);
     		}
     	}
     	map.put(name, node); //Add new node to map
+    	ArrayList<Path> emptyList = new ArrayList<>();
+    	pathMap.put(node, emptyList); //Add new node to pathMap
     	size++; //Increment network size
     	update_paths(node, parents);
     	return error.no_error;
@@ -72,24 +75,41 @@ public class Network {
      * @return an error code associated with Errors.java
      */
     private int update_paths(Node node, ArrayList<String> parents) {
-    	//Store paths relevant to node
-    	LinkedHashSet<Path> paths = new LinkedHashSet<Path>(); //Use a set to avoid duplicates
+    	int errorCode = error.no_error;
+    	//Build up a set of paths relevant to the given node
+    	LinkedHashSet<Path> localPaths = new LinkedHashSet<Path>(); //Use a set to avoid duplicates
     	
-    	//Loop through parent nodes, adding relevant paths to path set
+    	//Loop through parent nodes, adding relevant paths to localPaths set
     	for(int i=0; i<parents.size();i++) {
-    		Node parent_node = map.get(parents.get(i)); //Get the parent node object    		
-    		paths.addAll(pathMap.get(parent_node)); //Add associated paths to path set
+    		Node parent_node = map.get(parents.get(i)); //Get the parent node object
+    		if(parent_node == start) { //Check if parent is start node
+    			//Build new path and add to localPaths list
+    			Path path = new Path();
+    			path.append_node(parent_node);
+    			path.append_node(node);
+    			localPaths.add(path);
+    		}
+    		else { //Parent is not start node and already part of a path
+    			//Add all paths associated with parrent_node to localPaths set
+    			localPaths.addAll(pathMap.get(parent_node)); 
+    		}
+//    		System.out.println("pathMap.get(parent_node):" + pathMap.get(parent_node));
+//    		printPathMap();	
     	}
+    	// Now all relevant paths are added to localPaths
     	
-    	// evaluate each path
-    	Path[] pathArray = new Path[paths.size()]; // create array to iterate through each path
-    	paths.toArray(pathArray); //Copy path linked hash set to the array
+    	// evaluate each path in localPaths
+    	Path[] pathArray = new Path[localPaths.size()]; // create array to iterate through each path
+    	localPaths.toArray(pathArray); //Copy path linked hash set to the array
     	for(int i=0; i<pathArray.length;i++) {
-    		Path path = pathArray[i]; //Load Path object
-    		if(!path.append_node(node)) {//Append node to path
-    			return error.duplicate_node;
+    		if(!pathArray[i].append_node(node)) {//Append node to path at position i
+    			errorCode = error.duplicate_node;
     		}
     	}
+    	//Update pathMap
+    	ArrayList<Path> pathList = new ArrayList<Path>(Arrays.asList(pathArray));//Convert LinkedHashSet to arraylist
+    	pathMap.put(node, pathList); //Replace old path list with updated path list for given node
+    	
     	//Check if node is the end node
     	//If node has the same list of paths as Network.paths then it contains all paths
     	//and is therefore the end node.
@@ -103,7 +123,7 @@ public class Network {
     	}
     	//TODO
     	
-    	return error.no_error;
+    	return errorCode;
     }
     
     public boolean isEmpty() {
@@ -116,6 +136,82 @@ public class Network {
     public ArrayList<Path> get_paths() {
     	return paths;
     }
+    
+    
+    
+    /**
+     * Print information about the network to the console.
+     * First each node's attributes are printed(name, duration, and children).
+     * 
+     * Example node formatting:
+     * NodeName(Duration): Child1, Child2, Child3
+     * 
+     * Then each path is printed. Example path formatting:
+     * Path1(duration):Node1->Node2->Node3
+     */
+    public void printInfo() {
+    	System.out.println("Network Debug Info:");
+    	
+    	// Print each node
+    	System.out.println("Nodes:");
+    	for(HashMap.Entry<String, Node> pair: map.entrySet()) {
+    		Node node = pair.getValue();
+    		String output = ""; //Create output string
+    		output = node.get_name(); //Add name
+    		output = output + "(" + node.get_duration() + "): ";
+    		//Print Child Nodes:
+    		ArrayList<Node> nodeList = node.get_children();
+    		for(int i=0; i < nodeList.size();i++) {
+    			output = output + nodeList.get(i).get_name() + ", ";
+    		}
+    		System.out.println(output); //Print the current node's info
+    	}
+    	System.out.println("\n");
+    	
+    	
+    	// Print each path
+    	System.out.println("Paths:");
+    	for(int i = 0; i<paths.size();i++) {
+    		Path path = paths.get(i); //Get current path object
+    		String output = ""; //Create output string
+    		output += "Path" + i + "(" + path.get_duration() + "):";
+    		for(int j = 0;j<path.path.size();j++) {// Loop through each node in path
+    			output += path.path.get(j).get_name();
+    			if(j == paths.size() - 2) {//Check if -> should be added
+    				output += "->";
+    			}
+    		}
+    		System.out.println(output);
+    	}
+    	System.out.println("\n");
+    }
+    
+    public void printMap() {
+    	System.out.println("Map:");
+    	for (String name: map.keySet()){
+
+            String key = name.toString();
+            String value = map.get(name).get_name();  
+            System.out.println(key + " -> " + value + "(" + map.get(name)+")");  
+    	} 
+    	System.out.println("\n");
+	}
+    
+	public void printPathMap() {
+		System.out.println("pathMap:");
+		for (Node name: pathMap.keySet()){
+	
+	        String key = name.get_name();
+	        String value = "";
+	        if(!(pathMap.get(name) == null)) {
+	        	 value = pathMap.get(name).toString();
+	        	 System.out.println(key + " -> " + value);
+	        }
+	         
+	          
+		} 
+		System.out.println("\n");
+	}
     
  // The following methods are lower priority as they are not necessary for phase 1.
     
