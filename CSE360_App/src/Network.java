@@ -103,7 +103,7 @@ public class Network {
     	Path[] pathArray = new Path[localPaths.size()]; // create array from localPaths to iterate through each path
     	localPaths.toArray(pathArray); //Copy path linked hash set to the array
     	for(int i=0; i<pathArray.length;i++) {
-    		if(!pathArray[i].append_node(node)) {//Append node to path at position i
+    		if(pathArray[i].append_node(node) == error.no_error) {//Append node to path at position i
     			errorCode = error.duplicate_node;
     		}
     	}
@@ -239,7 +239,7 @@ public class Network {
 		System.out.println(paths.toString() + "\n");
 	}
     
- // The following methods are lower priority as they are not necessary for phase 1.
+// The following methods are lower priority as they are not necessary for phase 1.
     
 //    public void insert_node(String name, int duration, ArrayList<String> parents, ArrayList<String> children) {
 //    	//TODO
