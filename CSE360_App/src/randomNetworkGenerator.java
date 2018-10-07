@@ -72,7 +72,7 @@ public class randomNetworkGenerator {
 		parents.clear();
 		//Link parent nodes
 		for(int i = 0; i < nodes.size();i++) {
-			if(network.get_node(nodes.get(i)).get_children() == new ArrayList<Node>()){
+			if(network.get_node(nodes.get(i)).get_children().isEmpty()){
 				parents.add(nodes.get(i));
 			}
 		}
