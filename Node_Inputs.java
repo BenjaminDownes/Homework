@@ -16,12 +16,14 @@ import javax.swing.JComboBox;
 import javax.swing.JTree;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import java.awt.Font;
 
 public class Node_Inputs {
 	int y = 134;
 	private JFrame frame;
 	private JTable table;
 	private final Action action = new SwingAction();
+	private final JLabel lblNetworkAnalyzer = new JLabel("Network Analyzer");
 
 	/**
 	 * Launch the application.
@@ -62,13 +64,19 @@ public class Node_Inputs {
 		JButton button = new JButton("Exit");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
 			}
 		});
 		button.setBounds(570, 516, 97, 25);
 		frame.getContentPane().add(button);
 		
 		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.setBounds(365, 284, 97, 25);
+		btnSubmit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//this will analyze the inputed data and show the correct output
+			}
+		});
+		btnSubmit.setBounds(531, 341, 97, 25);
 		frame.getContentPane().add(btnSubmit);
 		
 		JLabel lblActivityName = new JLabel("Activity Name");
@@ -84,78 +92,84 @@ public class Node_Inputs {
 		frame.getContentPane().add(label_1);
 		
 		JButton btnAdd = new JButton("Add");
+		btnAdd.setAction(action);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				y += 50; //bring three boxes downward 50 y pixels
-				JFormattedTextField formattedTextField_9 = new JFormattedTextField();
-				formattedTextField_9.setBounds(22, y, 79, 22);
-				frame.getContentPane().add(formattedTextField_9);
+				JFormattedTextField activityName_4 = new JFormattedTextField();
+				activityName_4.setBounds(22, y+50, 79, 22);
+				frame.getContentPane().add(activityName_4);
 				
-				JFormattedTextField formattedTextField_10 = new JFormattedTextField();
-				formattedTextField_10.setBounds(128, y, 79, 22);
-				frame.getContentPane().add(formattedTextField_10);
+				JFormattedTextField duration_4 = new JFormattedTextField();
+				duration_4.setBounds(128, y+50, 79, 22);
+				frame.getContentPane().add(duration_4);
 				
-				JFormattedTextField formattedTextField_11 = new JFormattedTextField();
-				formattedTextField_11.setBounds(248, y, 79, 22);
-				frame.getContentPane().add(formattedTextField_11);
+				JFormattedTextField dependencies_4 = new JFormattedTextField();
+				dependencies_4.setBounds(248, y+50, 79, 22);
+				frame.getContentPane().add(dependencies_4);
+				y+=50;
 			}
 		});
-		btnAdd.setAction(action);
-		btnAdd.setBounds(12, 196, 97, 25);
+		btnAdd.setBounds(22, 341, 97, 25);
 		frame.getContentPane().add(btnAdd);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(22, 42, 79, 22);
-		frame.getContentPane().add(formattedTextField);
+		JFormattedTextField activityName_1 = new JFormattedTextField();
+		activityName_1.setBounds(22, 42, 79, 22);
+		frame.getContentPane().add(activityName_1);
 		
-		JFormattedTextField formattedTextField_1 = new JFormattedTextField();
-		formattedTextField_1.setBounds(128, 42, 79, 22);
-		frame.getContentPane().add(formattedTextField_1);
+		JFormattedTextField duration_1 = new JFormattedTextField();
+		duration_1.setBounds(128, 42, 79, 22);
+		frame.getContentPane().add(duration_1);
 		
-		JFormattedTextField formattedTextField_3 = new JFormattedTextField();
-		formattedTextField_3.setBounds(22, 84, 79, 22);
-		frame.getContentPane().add(formattedTextField_3);
+		JFormattedTextField activityName_2 = new JFormattedTextField();
+		activityName_2.setBounds(22, 84, 79, 22);
+		frame.getContentPane().add(activityName_2);
 		
-		JFormattedTextField formattedTextField_4 = new JFormattedTextField();
-		formattedTextField_4.setBounds(128, 84, 79, 22);
-		frame.getContentPane().add(formattedTextField_4);
+		JFormattedTextField duration_2 = new JFormattedTextField();
+		duration_2.setBounds(128, 84, 79, 22);
+		frame.getContentPane().add(duration_2);
 		
-		JFormattedTextField formattedTextField_2 = new JFormattedTextField();
-		formattedTextField_2.setBounds(248, 84, 79, 22);
-		frame.getContentPane().add(formattedTextField_2);
+		JFormattedTextField dependencies_2 = new JFormattedTextField();
+		dependencies_2.setBounds(248, 84, 79, 22);
+		frame.getContentPane().add(dependencies_2);
 		
-		JFormattedTextField formattedTextField_5 = new JFormattedTextField();
-		formattedTextField_5.setBounds(22, 134, 79, 22);
-		frame.getContentPane().add(formattedTextField_5);
+		JFormattedTextField activityName = new JFormattedTextField();
+		activityName.setBounds(22, 134, 79, 22);
+		frame.getContentPane().add(activityName);
 		
-		JFormattedTextField formattedTextField_6 = new JFormattedTextField();
-		formattedTextField_6.setBounds(128, 134, 79, 22);
-		frame.getContentPane().add(formattedTextField_6);
+		JFormattedTextField duration_3 = new JFormattedTextField();
+		duration_3.setBounds(128, 134, 79, 22);
+		frame.getContentPane().add(duration_3);
 		
-		JFormattedTextField formattedTextField_7 = new JFormattedTextField();
-		formattedTextField_7.setBounds(248, 134, 79, 22);
-		frame.getContentPane().add(formattedTextField_7);
+		JFormattedTextField dependencies_3 = new JFormattedTextField();
+		dependencies_3.setBounds(248, 134, 79, 22);
+		frame.getContentPane().add(dependencies_3);
+		lblNetworkAnalyzer.setFont(new Font("Times New Roman", Font.PLAIN, 30));
+		lblNetworkAnalyzer.setBounds(401, -12, 245, 76);
+		frame.getContentPane().add(lblNetworkAnalyzer);
 	}
+
+
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {
 			putValue(NAME, "Add");
-			putValue(SHORT_DESCRIPTION, "Some short description");
+			putValue(SHORT_DESCRIPTION, "Add a new row");
 		}
-
-
+		int y = 134;
 		public void actionPerformed(ActionEvent e) {
-			y += 50; //bring three boxes downward 50 y pixels
-			JFormattedTextField formattedTextField_9 = new JFormattedTextField();
-			formattedTextField_9.setBounds(22, y, 79, 22);
-			frame.getContentPane().add(formattedTextField_9);
+			JFormattedTextField activityName_4 = new JFormattedTextField();
+			activityName_4.setBounds(22, y+50, 79, 22);
+			frame.getContentPane().add(activityName_4);
 			
-			JFormattedTextField formattedTextField_10 = new JFormattedTextField();
-			formattedTextField_10.setBounds(128, y, 79, 22);
-			frame.getContentPane().add(formattedTextField_10);
+			JFormattedTextField duration_4 = new JFormattedTextField();
+			duration_4.setBounds(128, y+50, 79, 22);
+			frame.getContentPane().add(duration_4);
 			
-			JFormattedTextField formattedTextField_11 = new JFormattedTextField();
-			formattedTextField_11.setBounds(248, y, 79, 22);
-			frame.getContentPane().add(formattedTextField_11);
+			JFormattedTextField dependencies_4 = new JFormattedTextField();
+			dependencies_4.setBounds(248, y+50, 79, 22);
+			frame.getContentPane().add(dependencies_4);
+			y+=50;
+			
 		}
 	}
 }
+
