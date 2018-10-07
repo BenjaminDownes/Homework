@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-//TODO
-// Check for loops
 
 public class Path {
     protected int duration; //Total duration of path
     protected ArrayList<Node> path; //Stores a list of path names in order from start to end.
+    Errors error = new Errors();
     //E.G. path = ["Node a", Node b", "Node c"]
     
     public Path() {
@@ -19,7 +18,7 @@ public class Path {
         else {
 	    duration += n.get_duration();
 	    path.add(n);
-            return Errors.no_error;
+            return error.no_error;
         }
     }
 
@@ -29,11 +28,11 @@ public class Path {
         for(int i = 0; i < path.size(); i++) {
             for(int j = i+1; j < path.size(); j++) {
                 if(path.get(i).equals(path.get(j))) {
-                    return Errors.node_loop;
+                    return error.node_loop;
                 }
             }
         }
-        return Errors.no_error;
+        return error.no_error;
     }
     
     //returns false if node could not be removed (doesn't exist in path)
