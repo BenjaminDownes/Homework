@@ -93,20 +93,26 @@ public class Node_Inputs {
 		
 		JButton btnAdd = new JButton("Add");
 		btnAdd.setAction(action);
+		
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				JFormattedTextField activityName_4 = new JFormattedTextField();
-				activityName_4.setBounds(22, y+50, 79, 22);
-				frame.getContentPane().add(activityName_4);
+				JFormattedTextField activityName_x = new JFormattedTextField();
+				activityName_x.setBounds(22, y+50, 79, 22);
+				frame.getContentPane().add(activityName_x);
+				int counter = 4;
+				activityName_x.setName("activityName_" + counter);
 				
-				JFormattedTextField duration_4 = new JFormattedTextField();
-				duration_4.setBounds(128, y+50, 79, 22);
-				frame.getContentPane().add(duration_4);
+				JFormattedTextField duration_x = new JFormattedTextField();
+				duration_x.setBounds(128, y+50, 79, 22);
+				frame.getContentPane().add(duration_x);
+				duration_x.setName("duration_" + counter);
 				
-				JFormattedTextField dependencies_4 = new JFormattedTextField();
-				dependencies_4.setBounds(248, y+50, 79, 22);
-				frame.getContentPane().add(dependencies_4);
+				JFormattedTextField dependencies_x = new JFormattedTextField();
+				dependencies_x.setBounds(248, y+50, 79, 22);
+				frame.getContentPane().add(dependencies_x);
+				dependencies_x.setName("dependencies_" + counter);
 				y+=50;
+				counter++; //keeps track of current row index
 			}
 		});
 		btnAdd.setBounds(22, 341, 97, 25);
@@ -155,19 +161,25 @@ public class Node_Inputs {
 			putValue(SHORT_DESCRIPTION, "Add a new row");
 		}
 		int y = 134;
+		int counter = 4;
 		public void actionPerformed(ActionEvent e) {
-			JFormattedTextField activityName_4 = new JFormattedTextField();
-			activityName_4.setBounds(22, y+50, 79, 22);
-			frame.getContentPane().add(activityName_4);
 			
-			JFormattedTextField duration_4 = new JFormattedTextField();
-			duration_4.setBounds(128, y+50, 79, 22);
-			frame.getContentPane().add(duration_4);
+			JFormattedTextField activityName_x = new JFormattedTextField();
+			activityName_x.setBounds(22, y+50, 79, 22);
+			frame.getContentPane().add(activityName_x);
+			activityName_x.setName("activityName_" + counter);
 			
-			JFormattedTextField dependencies_4 = new JFormattedTextField();
-			dependencies_4.setBounds(248, y+50, 79, 22);
-			frame.getContentPane().add(dependencies_4);
+			JFormattedTextField duration_x = new JFormattedTextField();
+			duration_x.setBounds(128, y+50, 79, 22);
+			frame.getContentPane().add(duration_x);
+			duration_x.setName("duration_" + counter);
+			
+			JFormattedTextField dependencies_x = new JFormattedTextField();
+			dependencies_x.setBounds(248, y+50, 79, 22);
+			frame.getContentPane().add(dependencies_x);
+			dependencies_x.setName("dependencies_" + counter);
 			y+=50;
+			counter++; //keeps track of current row index
 			
 		}
 	}
