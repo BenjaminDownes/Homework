@@ -61,4 +61,11 @@ public class Node {
 	public void set_duration(int d) {
 		duration = d;
 	}
+
+        public boolean equals(Node n) {
+            if(n.get_name().equals(name))
+                return true;
+            else
+                return false;
+        }
 }
