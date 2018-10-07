@@ -29,7 +29,7 @@ public class randomNetworkGenerator {
 		
 		//Generate new nodes
 		System.out.println("Generating nodes with " + iterations + " iterations");
-		for(int i = 0; i < iterations; i++) {
+		for(int i = 0; i < iterations - 1; i++) {
 			parents.clear();
 			//Make node name
 			name = randomAlphaNumeric(5);

@@ -162,6 +162,7 @@ public class Network {
      */
     public void printInfo() {
     	System.out.println("Network Debug Info:\n");
+    	System.out.println("Network size: " + size);
     	
     	// Print each node
     	System.out.println("Nodes: [NodeName(Duration): Child1, Child2, Child3]\n");
@@ -193,7 +194,7 @@ public class Network {
     		output += "Path" + i + "(" + path.get_duration() + "):";
     		for(int j = 0;j<path.path.size();j++) {// Loop through each node in path
     			output += path.path.get(j).get_name();
-    			if(j != paths.size() - 1) {//Check if -> should be added
+    			if(j != path.path.size() - 1) {//Check if -> should be added
     				output += "->";
     			}
     		}

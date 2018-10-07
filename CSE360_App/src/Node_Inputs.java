@@ -150,7 +150,7 @@ public class Node_Inputs {
 			randomNetworkGenerator networkGenerator = new randomNetworkGenerator();
 			Network network = new Network();
 			
-			network = networkGenerator.generate_network(10);
+			network = networkGenerator.generate_network(20);
 			network.printInfo();
 		}
 		
