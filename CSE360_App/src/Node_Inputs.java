@@ -72,6 +72,7 @@ public class Node_Inputs {
 		label_1.setBounds(308, 16, 97, 16);
 		frame.getContentPane().add(label_1);
 		
+<<<<<<< Updated upstream
 		JButton btnHelp = new JButton("Help");
 		btnHelp.setBounds(438, 10, 79, 29);
 		frame.getContentPane().add(btnHelp);
@@ -81,6 +82,9 @@ public class Node_Inputs {
 		frame.getContentPane().add(btnAbout);
 		
 		node_test(2);
+=======
+		node_test(3);
+>>>>>>> Stashed changes
 	}
 	
 	public void node_test(int tCase) {
@@ -153,6 +157,17 @@ public class Node_Inputs {
 //			network.printInfo();
 			System.out.println("-------------------------------------------------");
 			
+			System.out.println("Add node 'c', duration 4, parents: 'a'\n");
+			errorCode = network.add_node("c", 4, parents);
+			System.out.println("Network.add('c') error code: " + errorCode + "\n");
+			
+//			network.printMap();
+//			network.printPathMap();
+//			network.printPaths();
+//			network.printInfo();
+			System.out.println("-------------------------------------------------");
+			
+			
 
 			System.out.println("Add node 'd', duration 5, parents: 'b, c'\n");
 			parents.clear();
@@ -177,6 +192,7 @@ public class Node_Inputs {
 			
 			network = networkGenerator.generate_network(20);
 			network.printInfo();
+			System.out.println(network.get_paths().toString());
 		}
 		
 	}

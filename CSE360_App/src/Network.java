@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 //TODO
 // Check for duplicate end nodes
@@ -143,8 +145,26 @@ public class Network {
     public ArrayList<Path> get_paths() {
     	//Convert paths to ArrayList
     	ArrayList<Path> pathsList = new ArrayList<Path>(paths);
-    	
+    	//Sort list based on path duration
+    	Collections.sort(pathsList, new PathComparator());
     	return pathsList;
+    }
+    
+    public class PathComparator implements Comparator<Path>{
+    	@Override
+    	public int compare(Path path1, Path path2) {
+    		int result;
+    		if(path1.get_duration() > path2.get_duration()){
+    			result = 1;
+    		}
+    		else if (path1.get_duration() < path2.get_duration()){
+    			result = -1;
+    		}
+    		else {
+    			result = 0;
+    		}
+    		return result;
+    	}
     }
     
     
