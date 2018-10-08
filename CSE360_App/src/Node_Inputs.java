@@ -72,6 +72,14 @@ public class Node_Inputs {
 		label_1.setBounds(308, 16, 97, 16);
 		frame.getContentPane().add(label_1);
 		
+		JButton btnHelp = new JButton("Help");
+		btnHelp.setBounds(438, 10, 79, 29);
+		frame.getContentPane().add(btnHelp);
+		
+		JButton btnAbout = new JButton("About this program");
+		btnAbout.setBounds(29, 307, 171, 29);
+		frame.getContentPane().add(btnAbout);
+		
 		node_test(2);
 	}
 	
@@ -172,6 +180,5 @@ public class Node_Inputs {
 		}
 		
 	}
-	
 }
 
