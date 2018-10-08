@@ -149,9 +149,55 @@ public class Node_Inputs {
 		else if (tCase == 3) {
 			randomNetworkGenerator networkGenerator = new randomNetworkGenerator();
 			Network network = new Network();
-			
 			network = networkGenerator.generate_network(20);
 			network.printInfo();
+		}
+		else if (tCase == 4) { //test cases based on project rubric
+			ArrayList<String> parents = new ArrayList<String>();
+
+			System.out.println("Results are correct for single, linear path (4 nodes in order)");
+			Network n1 = new Network();
+			n1.add_node("A", 2, parents);
+			parents.add(n1.get_node("A"));
+			n1.add_node("B", 4, parents);
+			parents.clear();
+			parents.add(n1.get_node("B"));
+			n1.add_node("C", 6, parents);
+			parents.clear();
+			parents.add(n1.get_node("C"));
+			n1.add_node("D", 5, parents);
+			parents.clear();
+			n1.printInfo();
+
+			System.out.println("Results are correct for 2 paths (4 nodes in order)");
+			Network n2 = new Network();
+			n2.add_node("A", 2, parents);
+			parents.add(n2.get_node("A"));
+			n2.add_node("B", 4, parents);
+			n2.add_node("C", 6, parents);
+			parents.clear();
+			parents.add(n2.get_node("B"));
+			parents.add(n2.get_node("C"));
+			n2.add_node("D", 5, parents);
+			parents.clear();
+			n2.printInfo();
+
+			System.out.println("Results are correct for 4 paths (nodes inserted in order)");
+			Network n3 = new Network();
+			n3.add_node("A", 2, parents);
+			parents.add(n1.get_node("A"));
+			n3.add_node("B", 4, parents);
+			n3.add_node("C", 6, parents);
+			n3.add_node("D", 3, parents);
+			n3.add_node("E", 10, parents);
+			parents.clear();
+			parents.add(n3.get_node("B"));
+			parents.add(n3.get_node("C"));
+			parents.add(n3.get_node("D"));
+			parents.add(n3.get_node("E"));
+			n3.add_node("F", 5, parents);
+			parents.clear();
+			n3.printInfo();
 		}
 		
 	}
