@@ -1,4 +1,3 @@
-package Network_Analyzer;
 
 import java.awt.EventQueue;
 
