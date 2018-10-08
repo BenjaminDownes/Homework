@@ -72,10 +72,14 @@ public class Node_Inputs {
 		label_1.setBounds(308, 16, 97, 16);
 		frame.getContentPane().add(label_1);
 		
-<<<<<<< Updated upstream
-		JButton btnHelp = new JButton("Help");
-		btnHelp.setBounds(438, 10, 79, 29);
-		frame.getContentPane().add(btnHelp);
+		JButton button2 = new JButton("Help");
+		button2.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			JOptionPane.showMessageDialog(frame.getComponent(0), "New Node: Adds additional nodes" + "\n" + "Submit: Inserts all inputs into the program" + "\n" + "About this program: Information about the program and it's developers" + "\n" + "Restart: Resets program to its input stage" + "\n" + "Quit: Quits program");
+        	}
+		});
+		button2.setBounds(438, 10, 79, 29);
+		frame.getContentPane().add(button2);
 		
 		JButton btnAbout = new JButton("About this program");
 		btnAbout.setBounds(29, 307, 171, 29);
