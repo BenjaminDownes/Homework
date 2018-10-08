@@ -20,7 +20,7 @@ public class randomNetworkGenerator {
 		String name = randomAlphaNumeric(5);
 		int duration = ThreadLocalRandom.current().nextInt(0, 100 + 1);
 		ArrayList<String> parents = new ArrayList<String>();
-		network.add_node(name, duration, parents);
+		network.add_nodes(name, duration, parents);
 		nodes.add(name);
 		
 		System.out.println("Node name: " + name);
@@ -29,7 +29,7 @@ public class randomNetworkGenerator {
 		
 		//Generate new nodes
 		System.out.println("Generating nodes with " + iterations + " iterations");
-		for(int i = 0; i < iterations - 1; i++) {
+		for(int i = 0; i < iterations - 2; i++) {
 			parents.clear();
 			//Make node name
 			name = randomAlphaNumeric(5);
@@ -60,7 +60,7 @@ public class randomNetworkGenerator {
 				
 			}
 			System.out.println("Parents: " + parents.toString());
-			network.add_node(name, duration, parents);
+			network.add_nodes(name, duration, parents);
 			nodes.add(name);
 			System.out.println("Node list: " + nodes.toString() + "\n");
 			
@@ -77,7 +77,7 @@ public class randomNetworkGenerator {
 			}
 		}
 		
-		network.add_node(name, duration, parents);
+		network.add_nodes(name, duration, parents);
 		nodes.add(name);
 		
 		System.out.println("Node name: " + name);

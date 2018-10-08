@@ -14,7 +14,7 @@ public class Path {
     //returns false if node to be added already exists on the path
     public int append_node(Node n) {
         if(path.contains(n)) //Check if node already exists
-            return error.duplicate_node;
+            return error.node_loop;
         else {
 	    duration += n.get_duration();
 	    path.add(n);

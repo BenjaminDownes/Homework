@@ -19,6 +19,9 @@ public class Network {
 	//Each path is an object that stores a list of path names in order from start to end.
 	//E.G. paths = [Path1, Path2, Path3]
 	
+	//private ArrayList<Node> nodes;
+	private HashMap<Node, ArrayList<String>> nodesMap;
+	
 	private HashMap<String, Node> map; //Keys are node names, values are corresponding node objects
 	private HashMap<Node, ArrayList<Path>> pathMap; //Associates a node with a list of paths
 	
@@ -33,15 +36,35 @@ public class Network {
     	end = null;
     	map = new HashMap<String, Node>();
     	pathMap = new HashMap<Node, ArrayList<Path>>();
+    	//nodes = new ArrayList<Node>();
+    	nodesMap = new HashMap<Node, ArrayList<String>>();
     }
     
+    public int add_nodes(String name, int duration, ArrayList<String> parents) {
+    	Node node = new Node(name, duration);
+    	if(nodesMap.get(node) == null) {
+    		nodesMap.put(node, parents);
+    	}
+    	else {
+    		return error.duplicate_node;
+    	}
+    	return error.no_error;
+    }
+    
+    
+    public int build_network() {
+    	int errorCode = error.no_error;
+    	
+    	
+    	return errorCode;
+    }
     /**
      * @param name
      * @param duration
      * @param parents
      * @return an error code associated with Errors.java
      */
-    public int add_node(String name, int duration, ArrayList<String> parents) {
+    private int add_node(String name, int duration, ArrayList<String> parents) {
     	if (map.containsKey(name)) {
     		return error.duplicate_node;
     	}
@@ -104,9 +127,15 @@ public class Network {
     	Path[] pathArray = new Path[localPaths.size()]; // create array from localPaths to iterate through each path
     	localPaths.toArray(pathArray); //Copy path linked hash set to the array
     	for(int i=0; i<pathArray.length;i++) {
-    		if(pathArray[i].append_node(node) == error.no_error) {//Append node to path at position i
-    			errorCode = error.duplicate_node;
+    		// Check for a loop
+    		int pathError = pathArray[i].append_node(node);
+    		if(pathError != error.no_error) {
+    			remove_node(node);
+    			return pathError;
     		}
+//    		if(pathArray[i].append_node(node) == error.no_error) {//Append node to path at position i
+//    			errorCode = error.duplicate_node;
+//    		}
     	}
     	//Update pathMap
     	ArrayList<Path> pathList = new ArrayList<Path>(Arrays.asList(pathArray));//Convert LinkedHashSet to arraylist
@@ -129,6 +158,17 @@ public class Network {
     	//TODO
     	
     	return errorCode;
+    }
+    
+    /**
+     * @param node
+     * Remove node from network.
+     * Note this does not do any sanity checking and may leave the network in a broken state.
+     */
+    private void remove_node(Node node) {
+    	map.remove(node); //Remove new node to map
+    	pathMap.remove(node); //Remove new node to pathMap
+    	size--; //Decrement network size
     }
     
     public Node get_node(String name) {

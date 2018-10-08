@@ -73,6 +73,7 @@ public class Node_Inputs {
 		label_1.setBounds(308, 16, 97, 16);
 		frame.getContentPane().add(label_1);
 		
+<<<<<<< Updated upstream
 		JButton button2 = new JButton("Help");
 		button2.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
@@ -81,15 +82,20 @@ public class Node_Inputs {
 		});
 		button2.setBounds(438, 10, 79, 29);
 		frame.getContentPane().add(button2);
+=======
+
+		JButton btnHelp = new JButton("Help");
+		btnHelp.setBounds(438, 10, 79, 29);
+		frame.getContentPane().add(btnHelp);
+>>>>>>> Stashed changes
 		
 		JButton btnAbout = new JButton("About this program");
 		btnAbout.setBounds(29, 307, 171, 29);
 		frame.getContentPane().add(btnAbout);
 		
 		node_test(2);
-=======
+
 		node_test(3);
->>>>>>> Stashed changes
 	}
 	
 	public void node_test(int tCase) {
