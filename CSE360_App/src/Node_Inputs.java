@@ -72,7 +72,23 @@ public class Node_Inputs {
 		label_1.setBounds(308, 16, 97, 16);
 		frame.getContentPane().add(label_1);
 		
+		JButton button2 = new JButton("Help");
+		button2.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			JOptionPane.showMessageDialog(frame.getComponent(0), "New Node: Adds additional nodes" + "\n" + "Submit: Inserts all inputs into the program" + "\n" + "About this program: Information about the program and it's developers" + "\n" + "Restart: Resets program to its input stage" + "\n" + "Quit: Quits program");
+        	}
+		});
+		button2.setBounds(438, 10, 79, 29);
+		frame.getContentPane().add(button2);
+		
+		JButton btnAbout = new JButton("About this program");
+		btnAbout.setBounds(29, 307, 171, 29);
+		frame.getContentPane().add(btnAbout);
+		
+		node_test(2);
+=======
 		node_test(3);
+>>>>>>> Stashed changes
 	}
 	
 	public void node_test(int tCase) {
@@ -118,9 +134,10 @@ public class Node_Inputs {
 			System.out.println("Network.add('a') error code: " + errorCode + "\n");
 			
 			
-			network.printMap();
-			network.printPathMap();
-			network.printPaths();
+//			network.printMap();
+//			network.printPathMap();
+//			network.printPaths();
+//			network.printInfo();
 			System.out.println("-------------------------------------------------");
 			
 			System.out.println("Add node 'b', duration 3, parents: 'a'\n");
@@ -128,18 +145,45 @@ public class Node_Inputs {
 			errorCode = network.add_node("b", 3, parents);
 			System.out.println("Network.add('b') error code: " + errorCode + "\n");
 			
-			network.printMap();
-			network.printPathMap();
-			network.printPaths();	
+//			network.printMap();
+//			network.printPathMap();
+//			network.printPaths();
+//			network.printInfo();
 			System.out.println("-------------------------------------------------");
 			
 			System.out.println("Add node 'c', duration 4, parents: 'a'\n");
 			errorCode = network.add_node("c", 4, parents);
 			System.out.println("Network.add('c') error code: " + errorCode + "\n");
 			
-			network.printMap();
-			network.printPathMap();
-			network.printPaths();	
+//			network.printMap();
+//			network.printPathMap();
+//			network.printPaths();
+//			network.printInfo();
+			System.out.println("-------------------------------------------------");
+			
+			System.out.println("Add node 'c', duration 4, parents: 'a'\n");
+			errorCode = network.add_node("c", 4, parents);
+			System.out.println("Network.add('c') error code: " + errorCode + "\n");
+			
+//			network.printMap();
+//			network.printPathMap();
+//			network.printPaths();
+//			network.printInfo();
+			System.out.println("-------------------------------------------------");
+			
+			
+
+			System.out.println("Add node 'd', duration 5, parents: 'b, c'\n");
+			parents.clear();
+			parents.add("b");
+			parents.add("c");
+			errorCode = network.add_node("d", 5, parents);
+			System.out.println("Network.add('d') error code: " + errorCode + "\n");
+			
+//			network.printMap();
+//			network.printPathMap();
+//			network.printPaths();
+//			network.printInfo();
 			System.out.println("-------------------------------------------------");
 
 			
@@ -151,6 +195,7 @@ public class Node_Inputs {
 			Network network = new Network();
 			network = networkGenerator.generate_network(20);
 			network.printInfo();
+			System.out.println(network.get_paths().toString());
 		}
 		else if (tCase == 4) { //test cases based on project rubric
 			ArrayList<String> parents = new ArrayList<String>();
@@ -201,6 +246,5 @@ public class Node_Inputs {
 		}
 		
 	}
-	
 }
 

@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 //TODO
 // Check for duplicate end nodes
@@ -64,8 +66,7 @@ public class Network {
     	ArrayList<Path> emptyList = new ArrayList<>();
     	pathMap.put(node, emptyList); //Add new node to pathMap
     	size++; //Increment network size
-    	update_paths(node, parents);
-    	return error.no_error;
+    	return update_paths(node, parents);
     	
     	//TODO
     }
@@ -118,12 +119,12 @@ public class Network {
     	//If node has the same list of paths as Network.paths then it contains all paths
     	//and is therefore the end node.
     	if(Network.paths.equals(localPaths)) {
-    		if(end == null) {//There is no end node set
+    		//if(end == null) {//There is no end node set
     			end = node; //The current node is set as the end node
-    		}
-    		else { //There are multiple end nodes
-    			return error.multiple_end_nodes;
-    		}
+    		//}
+    		//else { //There are multiple end nodes
+    			//return error.multiple_end_nodes;
+    		//}
     	}
     	//TODO
     	
@@ -144,8 +145,26 @@ public class Network {
     public ArrayList<Path> get_paths() {
     	//Convert paths to ArrayList
     	ArrayList<Path> pathsList = new ArrayList<Path>(paths);
-    	
+    	//Sort list based on path duration
+    	Collections.sort(pathsList, new PathComparator());
     	return pathsList;
+    }
+    
+    public class PathComparator implements Comparator<Path>{
+    	@Override
+    	public int compare(Path path1, Path path2) {
+    		int result;
+    		if(path1.get_duration() > path2.get_duration()){
+    			result = 1;
+    		}
+    		else if (path1.get_duration() < path2.get_duration()){
+    			result = -1;
+    		}
+    		else {
+    			result = 0;
+    		}
+    		return result;
+    	}
     }
     
     
@@ -163,6 +182,8 @@ public class Network {
     public void printInfo() {
     	System.out.println("Network Debug Info:\n");
     	System.out.println("Network size: " + size);
+    	System.out.println("Start node: " + start.get_name());
+    	System.out.println("End node: " + end.get_name());
     	
     	// Print each node
     	System.out.println("Nodes: [NodeName(Duration): Child1, Child2, Child3]\n");
