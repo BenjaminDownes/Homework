@@ -96,6 +96,23 @@ public class Node_Inputs {
 		});
 		btnSubmit.setBounds(117, 387, 97, 25);
 		frame.getContentPane().add(btnSubmit);
+<<<<<<< Updated upstream
+=======
+		
+		JLabel lblActivityName = new JLabel("Activity Name");
+		lblActivityName.setBounds(29, 16, 125, 16);
+		frame.getContentPane().add(lblActivityName);
+		
+		JLabel label = new JLabel("Duration");
+		label.setBounds(180, 16, 97, 16);
+		frame.getContentPane().add(label);
+		
+		JLabel label_1 = new JLabel("Dependencies");
+		label_1.setBounds(308, 16, 97, 16);
+		frame.getContentPane().add(label_1);
+		
+
+>>>>>>> Stashed changes
 		JButton button2 = new JButton("Help");
 		button2.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent arg0) {
@@ -104,6 +121,15 @@ public class Node_Inputs {
 		});
 		button2.setBounds(438, 10, 79, 29);
 		frame.getContentPane().add(button2);
+<<<<<<< Updated upstream
+=======
+
+
+		JButton btnHelp = new JButton("Help");
+		btnHelp.setBounds(438, 10, 79, 29);
+		frame.getContentPane().add(btnHelp);
+
+>>>>>>> Stashed changes
 		
 		JButton btnAbout = new JButton("About this program");
 		btnAbout.setBounds(29, 307, 171, 29);
@@ -170,8 +196,34 @@ public class Node_Inputs {
 			putValue(NAME, "Add");
 			putValue(SHORT_DESCRIPTION, "Add a new row");
 		}
+<<<<<<< Updated upstream
 		int y = 142;
 		int counter = 4;
+=======
+		else if (tCase == 3) {
+			randomNetworkGenerator networkGenerator = new randomNetworkGenerator();
+			Network network = new Network();
+			network = networkGenerator.generate_network(20);
+			network.printInfo();
+			System.out.println(network.get_paths().toString());
+		}
+		else if (tCase == 4) { //test cases based on project rubric
+			ArrayList<String> parents = new ArrayList<String>();
+
+			System.out.println("Results are correct for single, linear path (4 nodes in order)");
+			Network n1 = new Network();
+			n1.add_nodes("A", 2, parents);
+			parents.add()(n1.get_node("A"));
+			n1.add_node("B", 4, parents);
+			parents.clear();
+			parents.add(n1.get_node("B"));
+			n1.add_node("C", 6, parents);
+			parents.clear();
+			parents.add(n1.get_node("C"));
+			n1.add_node("D", 5, parents);
+			parents.clear();
+			n1.printInfo();
+>>>>>>> Stashed changes
 
 		public void actionPerformed(ActionEvent e) {
 			
