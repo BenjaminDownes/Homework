@@ -12,7 +12,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 import java.awt.Button;
 import java.awt.Component;
-
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTree;
 import javax.swing.AbstractAction;
@@ -96,7 +96,18 @@ public class Node_Inputs {
 		});
 		btnSubmit.setBounds(117, 387, 97, 25);
 		frame.getContentPane().add(btnSubmit);
+		JButton button2 = new JButton("Help");
+		button2.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			JOptionPane.showMessageDialog(frame.getComponent(0), "New Node: Adds additional nodes" + "\n" + "Submit: Inserts all inputs into the program" + "\n" + "About this program: Information about the program and it's developers" + "\n" + "Restart: Resets program to its input stage" + "\n" + "Quit: Quits program");
+        	}
+		});
+		button2.setBounds(438, 10, 79, 29);
+		frame.getContentPane().add(button2);
 		
+		JButton btnAbout = new JButton("About this program");
+		btnAbout.setBounds(29, 307, 171, 29);
+		frame.getContentPane().add(btnAbout);
 		JLabel lblActivityName = new JLabel("Activity Name");
 		lblActivityName.setBounds(12, 13, 97, 16);
 		frame.getContentPane().add(lblActivityName);
