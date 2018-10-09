@@ -5,12 +5,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import java.util.LinkedHashSet;
-
+//TODO add clear() method
+//TODO check for reference to nonexistent parent
 
 public class Network {
 	
 	private Errors error = new Errors();
-	protected int size; //Number of nodes in network
+	//protected int size; //Number of nodes in network
 	private Node start; //Start node of network
 	private Node end; //End node of network
 	
@@ -33,7 +34,7 @@ public class Network {
      * 
      */
     public Network() {
-    	size = 0;
+    	//size = 0;
     	paths = new LinkedHashSet<Path>(); // Array of path objects
     	start = null;
     	end = null;
@@ -55,6 +56,7 @@ public class Network {
      * @return error code
      */
     public int add_node(String name, int duration, ArrayList<String> parents) {
+    	Node node = new Node(name, duration);
     	
     	//Check if node already exists
     	if(durationMap.get(name) != null) {
@@ -64,18 +66,20 @@ public class Network {
     	//Check for start node
     	else if(parents.isEmpty()) {
     		if(start == null) {
-    			start = new Node(name, duration); //Placeholder node to indicate start node exists
+    			start = node; //Placeholder node to indicate start node exists
     		}
     		else {
     			return error.multiple_start_nodes;
     		}
     	}
-    	
     	//Add node info to data structures
 		durationMap.put(name, duration);
+		System.out.println("Name: "+ name + " Parents: "+parents.toString());
 		parentMap.put(name, parents);
 		nodeNames.add(name);
 		parentSet.addAll(parents);
+		nodeMap.put(name, node);
+		//size++;
 		
     	return error.no_error;
     }
@@ -86,22 +90,36 @@ public class Network {
      * @return error code
      */
     public int build_network() {
+    	System.out.println("Network size: " + nodeMap.size());
     	int errorCode = error.no_error;
+    	
+    	//Check for reference to nonexistent parent
+    	for(String parent : parentSet) {
+    		if(!nodeNames.contains(parent)) {
+    			clear();
+    			System.out.println("invalid_parent_reference");
+    			return error.invalid_parent_reference;
+    		}
+    	}
     	
     	// Find end node
     	for(String nodeName : nodeNames) {
     		if(!parentSet.contains(nodeName)) {
-    			if(end != null) {//make sure there is no other end node set
-    				end = new Node(nodeName, durationMap.get(nodeName));
+    			if(end == null) {//make sure there is no other end node set
+    				end = nodeMap.get(nodeName);
     			}
     			else {//An end node already exists!
+    				clear();
+    				System.out.println("multiple_end_nodes");
     				return error.multiple_end_nodes;
     			}
     		}
     	}
     	
-    	//Recursively build linked network
-    	
+    	//Recursively link nodes starting from end node
+    	System.out.println("End node: "+end);
+    	build_links(end);
+    	errorCode = build_paths();
     	
     	
 //    	Node currentNode;
@@ -142,12 +160,30 @@ public class Network {
     	
     	
     	
-    	
+    	System.out.println("Build netowrk error code: " + errorCode);
     	return errorCode;
     }
     
-    private void build_links(Node currentNode) {
+    private void build_links(Node childNode) {
+    	System.out.println("build_links: childNode = "+childNode);
     	//Recursively build linked network backwards from the end node
+    	
+    	//End case
+    	if(childNode.get_name() == start.get_name()) {
+    		System.out.println("build_links: found start node");
+    		return;
+    	}
+    	for(String parentName : parentMap.get(childNode.get_name())) {
+//    		if(parentName == start.get_name()) {
+//    			start.add_child(childNode);
+//    			return;
+//    		}
+    		Node parentNode = nodeMap.get(parentName);
+    		parentNode.add_child(childNode);
+    		build_links(parentNode);
+    	}
+    	return;
+    	
     	
 //    	//Look for nodes that are children of current node
 //    	ArrayList<String> childNodes = findChildren(currentNode.get_name());
@@ -161,7 +197,14 @@ public class Network {
     	
     	
     }
-    private ArrayList<String> findChildren(String parentName) {
+    private int build_paths() {
+		// TODO Auto-generated method stub
+		int errorCode = error.no_error;
+		
+		return errorCode;
+	}
+
+	private ArrayList<String> findChildren(String parentName) {
 		// TODO Auto-generated method stub
     	
     	ArrayList<String> children = new ArrayList<String>(); //child nodes to return
@@ -215,7 +258,7 @@ public class Network {
     	nodeMap.put(name, node); //Add new node to map
     	ArrayList<Path> emptyList = new ArrayList<>();
     	pathMap.put(node, emptyList); //Add new node to pathMap
-    	size++; //Increment network size
+    	//size++; //Increment network size
     	return update_paths(node, parents);
     	
     	//TODO
@@ -295,15 +338,30 @@ public class Network {
     private void remove_node(Node node) {
     	nodeMap.remove(node); //Remove new node to map
     	pathMap.remove(node); //Remove new node to pathMap
-    	size--; //Decrement network size
+    	//size--; //Decrement network size
     }
     
-    public Node get_node(String name) {
+    private void clear() {
+		// clear network contents
+    	//size = 0;
+    	paths.clear();
+    	start = null;
+    	end = null;
+    	nodeMap.clear();
+    	pathMap.clear();
+    	nodeNames.clear();
+    	parentSet.clear();
+    	durationMap.clear();
+    	parentMap.clear();
+		
+	}
+
+	public Node get_node(String name) {
     	return nodeMap.get(name);
     }
     
     public boolean isEmpty() {
-    	return size == 0;
+    	return nodeMap.size() == 0;
     }
     
     /**
@@ -348,13 +406,13 @@ public class Network {
      */
     public void printInfo() {
     	System.out.println("Network Debug Info:\n");
-    	System.out.println("Network size: " + size);
-    	System.out.println("Start node: " + start.get_name());
-    	System.out.println("End node: " + end.get_name());
+    	System.out.println("Network size: " + nodeMap.size());
+    	System.out.println("Start node: " + start);
+    	System.out.println("End node: " + end);
     	
     	// Print each node
     	System.out.println("Nodes: [NodeName(Duration): Child1, Child2, Child3]\n");
-    	System.out.println("Start node: " + start.get_name()+ "[" + start + "]\n");
+    	//System.out.println("Start node: " + start.get_name()+ "[" + start + "]\n");
     	for(HashMap.Entry<String, Node> pair: nodeMap.entrySet()) {
     		Node node = pair.getValue();
     		String output = "•"; //Create output string
@@ -427,6 +485,13 @@ public class Network {
 		System.out.println(paths.toString() + "\n");
 	}
     
+	public void printDataStructures() {
+		printMap();
+		printPathMap();
+		printPaths();
+		System.out.println("Parent set: " + parentSet.toString());
+		System.out.println("Parent Map: " + parentMap.toString());
+	}
 // The following methods are lower priority as they are not necessary for phase 1.
     
 //    public void insert_node(String name, int duration, ArrayList<String> parents, ArrayList<String> children) {

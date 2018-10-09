@@ -87,10 +87,10 @@ public class Node_Inputs {
 				int concurrentY = 42;
 				
 				//private final ArrayList<Node> names = new ArrayList<Node>(); 
-				Node row_x = new Node();
-				row_x.set_name(frame.getComponentAt(22, concurrentY).toString());
-				row_x.set_duration(Integer.parseInt(frame.getComponentAt(128, concurrentY).toString())); //add 50 to y values for each row...
-				row_x.set_children(null);
+				//Node row_x = new Node();
+//				row_x.set_name(frame.getComponentAt(22, concurrentY).toString());
+//				row_x.set_duration(Integer.parseInt(frame.getComponentAt(128, concurrentY).toString())); //add 50 to y values for each row...
+//				row_x.set_children(null);
 				
 			}
 		});
@@ -232,83 +232,83 @@ public class Node_Inputs {
 			node.remove_child(node3);
 			System.out.println(node.get_children());
 		}
-//		else if(tCase == 2) {
-//			Network network = new Network();
-//			
-//			ArrayList<String> parents = new ArrayList<String>(); //Store list of parents
-//			
-//			System.out.println("Add node 'a', duration 2, no parents\n");
-//			network.add_node("a", 2, parents);
-//			
-//			
+		else if(tCase == 2) {
+			Network network = new Network();
+			
+			ArrayList<String> parents = new ArrayList<String>(); //Store list of parents
+			int errorCode;
+			String name;
+			
+			System.out.println("Add node 'a', duration 2, no parents\n");
+			name = ("a");
+			network.add_node(name, 2, parents);
+			
+			
 //			System.out.println("Add duplicate node 'a':");
 //			int errorCode = network.add_node("a", 3, parents);
 //			System.out.println("Network.add('a') error code: " + errorCode + "\n");
-//			
-//			
-////			network.printMap();
-////			network.printPathMap();
-////			network.printPaths();
-////			network.printInfo();
-//			System.out.println("-------------------------------------------------");
-//			
-//			System.out.println("Add node 'b', duration 3, parents: 'a'\n");
-//			parents.add("a");
-//			errorCode = network.add_node("b", 3, parents);
-//			System.out.println("Network.add('b') error code: " + errorCode + "\n");
-//			
-////			network.printMap();
-////			network.printPathMap();
-////			network.printPaths();
-////			network.printInfo();
-//			System.out.println("-------------------------------------------------");
-//			
+			
+			
+			network.printDataStructures();
+//			network.printInfo();
+			System.out.println("-------------------------------------------------");
+			
+			System.out.println("Add node 'b', duration 3, parents: 'a'\n");
+			parents = new ArrayList<String>();
+			parents.add("a");
+			errorCode = network.add_node("b", 3, parents);
+			System.out.println("Network.add('b') error code: " + errorCode + "\n");
+			
+			network.printDataStructures();
+//			network.printInfo();
+			System.out.println("-------------------------------------------------");
+			
+			System.out.println("Add node 'c', duration 4, parents: 'a'\n");
+			parents = new ArrayList<String>();
+			parents.add("a");
+			errorCode = network.add_node("c", 4, parents);
+			System.out.println("Network.add('c') error code: " + errorCode + "\n");
+			
+			network.printDataStructures();
+//			network.printInfo();
+			System.out.println("-------------------------------------------------");
+			
 //			System.out.println("Add node 'c', duration 4, parents: 'a'\n");
 //			errorCode = network.add_node("c", 4, parents);
 //			System.out.println("Network.add('c') error code: " + errorCode + "\n");
 //			
-////			network.printMap();
-////			network.printPathMap();
-////			network.printPaths();
+//			network.printMap();
+//			network.printPathMap();
+//			network.printPaths();
 ////			network.printInfo();
 //			System.out.println("-------------------------------------------------");
-//			
-//			System.out.println("Add node 'c', duration 4, parents: 'a'\n");
-//			errorCode = network.add_node("c", 4, parents);
-//			System.out.println("Network.add('c') error code: " + errorCode + "\n");
-//			
-////			network.printMap();
-////			network.printPathMap();
-////			network.printPaths();
-////			network.printInfo();
-//			System.out.println("-------------------------------------------------");
-//			
-//			
-//
-//			System.out.println("Add node 'd', duration 5, parents: 'b, c'\n");
-//			parents.clear();
-//			parents.add("b");
-//			parents.add("c");
-//			errorCode = network.add_node("d", 5, parents);
-//			System.out.println("Network.add('d') error code: " + errorCode + "\n");
-//			
-////			network.printMap();
-////			network.printPathMap();
-////			network.printPaths();
-////			network.printInfo();
-//			System.out.println("-------------------------------------------------");
-//
-//			
-//			
+			
+			
+
+			System.out.println("Add node 'd', duration 5, parents: 'b, c'\n");
+			parents = new ArrayList<String>();
+			parents.add("b");
+			parents.add("c");
+			errorCode = network.add_node("d", 5, parents);
+			System.out.println("Network.add('d') error code: " + errorCode + "\n");
+			
+			network.printDataStructures();
 //			network.printInfo();
-//		}
-//		else if (tCase == 3) {
-//			randomNetworkGenerator networkGenerator = new randomNetworkGenerator();
-//			Network network = new Network();
-//			network = networkGenerator.generate_network(20);
-//			network.printInfo();
-//			System.out.println(network.get_paths().toString());
-//		}
+			System.out.println("-------------------------------------------------");
+
+			
+			network.build_network();
+			network.printInfo();
+		}
+		else if (tCase == 3) {
+			randomNetworkGenerator networkGenerator = new randomNetworkGenerator();
+			Network network = new Network();
+			network = networkGenerator.generate_network(5);
+			network.build_network();
+			network.printDataStructures();
+			network.printInfo();
+			System.out.println(network.get_paths().toString());
+		}
 //		else if (tCase == 4) { //test cases based on project rubric
 //			ArrayList<String> parents = new ArrayList<String>();
 //
@@ -356,7 +356,7 @@ public class Node_Inputs {
 //			parents.clear();
 //			n3.printInfo();
 //		}
-		
+//		
 	}
 
 }
