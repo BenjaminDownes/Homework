@@ -190,7 +190,7 @@ public class Node_Inputs {
 			
 			JFormattedTextField activityName_x = new JFormattedTextField();
 			activityName_x.setBounds(22, y+50, 79, 22);
-			frame.getContentPane().add(activityName_x);;
+			frame.getContentPane().add(activityName_x);
 			activityName_x.setName("activityName_" + counter);
 		
 
