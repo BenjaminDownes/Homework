@@ -139,8 +139,14 @@ public class Node_Inputs {
 		frame.getContentPane().add(button2);
 		
 		JButton btnAbout = new JButton("About this program");
+		btnAbout.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			JOptionPane.showMessageDialog(frame.getComponent(0), "This program analyzes all inputted paths in a network and determines their duration." + "\n" + "Team members involved in program: Kristian Charboneau, Qianru Zhao, Benjamin Downes, Weinn Jiang");
+	        }
+		});
 		btnAbout.setBounds(364, 516, 149, 25);
 		frame.getContentPane().add(btnAbout);
+		
 		JLabel lblActivityName = new JLabel("Activity Name");
 		lblActivityName.setBounds(12, 13, 97, 16);
 		frame.getContentPane().add(lblActivityName);
@@ -189,7 +195,7 @@ public class Node_Inputs {
 			
 			JFormattedTextField activityName_x = new JFormattedTextField();
 			activityName_x.setBounds(22, y+50, 79, 22);
-			frame.getContentPane().add(activityName_x);;
+			frame.getContentPane().add(activityName_x);
 			activityName_x.setName("activityName_" + counter);
 		
 
