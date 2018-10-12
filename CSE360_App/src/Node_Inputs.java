@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -31,6 +32,7 @@ public class Node_Inputs {
 
 	private final Action action = new SwingAction();
 	private final JLabel lblNetworkAnalyzer = new JLabel("Network Analyzer");
+	Network network = new Network();
 
 	/**
 	 * Launch the application.
@@ -105,12 +107,28 @@ public class Node_Inputs {
 				int parents_y_val = 42;
 				for (int i = 0; i < counter; i++) {
 					parents.add(((JFormattedTextField)frame.getContentPane().getComponentAt(248, parents_y_val)).getText());
-					System.out.println(parents);
+					
 					
 					parents_y_val += 50;
 				
-				
 			}
+				for(int j = 0; j < names.size(); j++) {
+					ArrayList<String> tmp = new ArrayList<String>();
+					if(parents.get(j).isEmpty()) {
+						network.add_node(names.get(j), durations.get(j), tmp);
+					}
+					else {
+						for(String element : parents.get(j).split(",")) {
+							tmp.add(element);
+							
+						}
+						network.add_node(names.get(j), durations.get(j), tmp);
+					}
+					
+					
+				}
+				network.build_network();
+				network.printInfo();
 		}});
 		btnSubmit.setBounds(471, 314, 97, 25);
 		frame.getContentPane().add(btnSubmit);
