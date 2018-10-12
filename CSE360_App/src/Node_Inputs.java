@@ -64,21 +64,6 @@ public class Node_Inputs {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnReset = new JButton("Reset");
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				for (Component c : frame.getComponents()) {
-				    if (c instanceof JFormattedTextField) { 
-				       ((JFormattedTextField)c).setValue("");
-				       frame.repaint();
-				    }
-				}
-				//also need to clear network path
-			}
-		});
-		btnReset.setBounds(725, 516, 97, 25);
-		frame.getContentPane().add(btnReset);
-		
 		JButton button = new JButton("Exit");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -179,9 +164,30 @@ public class Node_Inputs {
 		frame.getContentPane().add(btnAdd);
 		btnAdd.setAction(action);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(248, 42, 79, 22);
-		frame.getContentPane().add(formattedTextField);
+		JFormattedTextField dependencies_1 = new JFormattedTextField();
+		dependencies_1.setBounds(248, 42, 79, 22);
+		frame.getContentPane().add(dependencies_1);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			if(e.getSource() == btnReset) {
+				activityName_1.setText("");
+				duration_1.setText("");
+				dependencies_1.setText("");
+			}
+			//	for (Component c : frame.getComponents()) {
+			//	    if (c instanceof JFormattedTextField) { 
+			//	       ((JFormattedTextField)c).setValue("");
+			//	       frame.repaint();
+			//	    }
+			//	}
+				//also need to clear network path
+			}
+		});
+		btnReset.setBounds(725, 516, 97, 25);
+		frame.getContentPane().add(btnReset);
+		
 	}
 	int y = 42;
 	int counter = 1;
