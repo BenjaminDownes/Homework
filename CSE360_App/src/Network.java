@@ -67,6 +67,7 @@ public class Network {
     	else if(parents.isEmpty()) {
     		if(start == null) {
     			start = node; //Placeholder node to indicate start node exists
+    			parentMap.put(name, parents);
     		}
     		else {
     			return error.multiple_start_nodes;
@@ -119,44 +120,24 @@ public class Network {
     	//Recursively link nodes starting from end node
     	System.out.println("End node: "+end);
     	build_links(end);
-    	errorCode = build_paths();
     	
     	
-//    	Node currentNode;
-//    	
-//    	currentNode = start;
-//    	
-//    	//Begin with start node(clear it from the nodeNames list
-//    	//nodeNames.remove(start.get_name());
-//    	//Look for nodes that are children of start node
-//    	//ArrayList<String> childNodes = findChildren(start.get_name());
-//    	//Link them with start node
-////    	for(String child : childNodes) {
-////    		Node childNode = new Node(child, durationMap.get(child));
-////    		start.add_child(childNode);
-////    	}
-//    	
-//    	//Build linked network
-//    	while(!nodeNames.isEmpty()) { //loop until no more nodes are left to process
-//    		
-//        	//Look for nodes that are children of current node
-//        	ArrayList<String> childNodes = findChildren(currentNode.get_name());
-//        	//Link them with current node
-//        	for(String child : childNodes) {
-//        		Node childNode = new Node(child, durationMap.get(child));
-//        		currentNode.add_child(childNode);
-//        	}
-//        	
-//    		
-//    		//WAIT Add child nodes to paths
-//        	
-//        	//WAIT Check paths for loops
-//    		
-//    		//remove child nodes from nodeNames
-//    		
-//        	//Check for nodes that reference current nodes
-//        	//Repeat for each node until no more nodes left or error is found
-//    	}
+    	//Build paths for the start node
+    	ArrayList<Path> pathList = new ArrayList<Path>();
+    	for(Node child: start.get_children()) {
+    		Path path = new Path();
+        	path.append_node(start);
+        	path.append_node(child);
+        	pathList.add(path);
+        	paths.add(path);
+        	pathMap.put(child, pathList);
+    	}
+    	pathMap.put(start, pathList);
+    	errorCode = build_paths(start);
+    	
+    	for(Node child: start.get_children()) {
+    		build_paths(child);
+    	}
     	
     	
     	
@@ -197,11 +178,47 @@ public class Network {
     	
     	
     }
-    private int build_paths() {
+    
+    private int build_paths(Node node) {
 		// TODO Auto-generated method stub
 		int errorCode = error.no_error;
+		ArrayList<Path> pathList = pathMap.get(node);
 		
+		// Check if node == end node; return if true
+		
+		if(node == end) {
+			return errorCode;
+		}
+		else {
+			//Add first child node
+			Node child = node.get_children().get(0);
+			for(Path path : pathList) {
+				path.append_node(child);
+				pathMap.put(child, pathList);
+			}
+			
+			//Loop through other nodes
+			ArrayList<Node> children = node.get_children();
+			//Loop through each child ignoring the first child
+			for(int i = 1;i <  children.size(); i++) {
+				Path newPath = new Path();
+				//For each path that node is in, create new path with children[i] appended
+				for(Path path : pathList) {
+					newPath.set_path(path.get_path());
+					newPath.append_node(children.get(i));
+				}
+				
+			}
+		}
+		
+	
 		return errorCode;
+		
+		
+//		ArrayList<Path> emptyList = new ArrayList<>();
+//		pathMap.put(node, emptyList);
+//		
+//		return update_paths(node, parentMap.get(node.get_name()));
 	}
 
 	private ArrayList<String> findChildren(String parentName) {
