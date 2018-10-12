@@ -6,4 +6,5 @@ public class Errors {
 	protected int multiple_end_nodes = 4;
 	public int multiple_start_nodes = 5;
 	public int invalid_parent_reference = 6;
+
 }
