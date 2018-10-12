@@ -179,9 +179,9 @@ public class Node_Inputs {
 		frame.getContentPane().add(btnAdd);
 		btnAdd.setAction(action);
 		
-		JFormattedTextField formattedTextField = new JFormattedTextField();
-		formattedTextField.setBounds(248, 42, 79, 22);
-		frame.getContentPane().add(formattedTextField);
+		JFormattedTextField dependencies_1 = new JFormattedTextField();
+		dependencies_1.setBounds(248, 42, 79, 22);
+		frame.getContentPane().add(dependencies_1);
 	}
 	int y = 42;
 	int counter = 1;
