@@ -133,7 +133,6 @@ public class Network {
         	pathMap.put(child, pathList);
     	}
     	pathMap.put(start, pathList);
-    	errorCode = build_paths(start);
     	
     	for(Node child: start.get_children()) {
     		build_paths(child);
