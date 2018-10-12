@@ -357,7 +357,7 @@ public class Network {
     	//size--; //Decrement network size
     }
     
-    private void clear() {
+    public void clear() {
 		// clear network contents
     	//size = 0;
     	paths.clear();

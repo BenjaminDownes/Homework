@@ -3,7 +3,6 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
@@ -33,7 +32,6 @@ public class Node_Inputs {
 	private final Action action = new SwingAction();
 	private final JLabel lblNetworkAnalyzer = new JLabel("Network Analyzer");
 	Network network = new Network();
-
 	/**
 	 * Launch the application.
 	 */
@@ -107,28 +105,12 @@ public class Node_Inputs {
 				int parents_y_val = 42;
 				for (int i = 0; i < counter; i++) {
 					parents.add(((JFormattedTextField)frame.getContentPane().getComponentAt(248, parents_y_val)).getText());
-					
+					System.out.println(parents);
 					
 					parents_y_val += 50;
 				
+				
 			}
-				for(int j = 0; j < names.size(); j++) {
-					ArrayList<String> tmp = new ArrayList<String>();
-					if(parents.get(j).isEmpty()) {
-						network.add_node(names.get(j), durations.get(j), tmp);
-					}
-					else {
-						for(String element : parents.get(j).split(",")) {
-							tmp.add(element);
-							
-						}
-						network.add_node(names.get(j), durations.get(j), tmp);
-					}
-					
-					
-				}
-				network.build_network();
-				network.printInfo();
 		}});
 		btnSubmit.setBounds(471, 314, 97, 25);
 		frame.getContentPane().add(btnSubmit);
@@ -189,11 +171,17 @@ public class Node_Inputs {
 		JButton btnReset = new JButton("Reset");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				if(e.getSource() == btnReset) {
-					activityName_1.setText("");
-					duration_1.setText("");
-					dependencies_1.setText("");
-				}	
+					for (int i = 0; i < counter; i++) {
+						int activity_y_val = 42;
+						((JFormattedTextField)frame.getContentPane().getComponentAt(22, activity_y_val )).setText("");		
+						((JFormattedTextField)frame.getContentPane().getComponentAt(128, activity_y_val)).setText("");
+						((JFormattedTextField)frame.getContentPane().getComponentAt(248, activity_y_val)).setText("");
+						activity_y_val+= 50;
+					}
+					network.clear();
+			}
 			//	for (Component c : frame.getComponents()) {
 			//	    if (c instanceof JFormattedTextField) { 
 			//	       ((JFormattedTextField)c).setValue("");
