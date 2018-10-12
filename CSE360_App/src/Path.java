@@ -22,6 +22,11 @@ public class Path {
         }
     }
 
+    //allows a path to be passed in and set as the current path
+    public void set_path(ArrayList<Path> nodeList) {
+        path = (ArrayList)nodeList.clone();
+    }
+
     //cycles through entire path to check if there are loops in the path
     //there is a loop in the path if a node exists in the path multiple times
     public int find_loops() {        
