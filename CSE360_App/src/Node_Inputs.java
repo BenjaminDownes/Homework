@@ -119,7 +119,7 @@ public class Node_Inputs {
 				
 				int parents_y_val = 42;
 				for (int i = 0; i < counter; i++) {
-					names.add(((JFormattedTextField)frame.getContentPane().getComponentAt(248, parents_y_val)).getText());
+					parents.add(((JFormattedTextField)frame.getContentPane().getComponentAt(248, parents_y_val)).getText());
 					System.out.println(parents);
 					
 					parents_y_val += 50;
