@@ -3,15 +3,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-//TODO
-// Check for duplicate end nodes
-import java.util.LinkedHashSet;
 
+import java.util.LinkedHashSet;
+//TODO add clear() method
+//TODO check for reference to nonexistent parent
 
 public class Network {
 	
 	private Errors error = new Errors();
-	protected int size; //Number of nodes in network
+	//protected int size; //Number of nodes in network
 	private Node start; //Start node of network
 	private Node end; //End node of network
 	
@@ -19,83 +19,269 @@ public class Network {
 	//Each path is an object that stores a list of path names in order from start to end.
 	//E.G. paths = [Path1, Path2, Path3]
 	
-	//private ArrayList<Node> nodes;
-	private HashMap<Node, ArrayList<String>> nodesMap;
+	private ArrayList<String> nodeNames; //Maintains a list of all node names
+	private LinkedHashSet<String> parentSet; //maintains a set of parent nodes that are referenced by each node
+//	private HashMap<Node, ArrayList<String>> nodesMap;
 	
-	private HashMap<String, Node> map; //Keys are node names, values are corresponding node objects
+	private HashMap<String, Node> nodeMap; //Keys are node names, values are corresponding node objects
 	private HashMap<Node, ArrayList<Path>> pathMap; //Associates a node with a list of paths
+	
+	private HashMap<String, Integer> durationMap; //Maps node names to duration
+	private HashMap<String, ArrayList<String>> parentMap; //Maps node names to list of parents
 	
 	
     /**
      * 
      */
     public Network() {
-    	size = 0;
+    	//size = 0;
     	paths = new LinkedHashSet<Path>(); // Array of path objects
     	start = null;
     	end = null;
-    	map = new HashMap<String, Node>();
+    	nodeMap = new HashMap<String, Node>();
     	pathMap = new HashMap<Node, ArrayList<Path>>();
-    	//nodes = new ArrayList<Node>();
-    	nodesMap = new HashMap<Node, ArrayList<String>>();
+    	nodeNames = new ArrayList<String>();
+    	parentSet = new LinkedHashSet<String>();
+    	//nodesMap = new HashMap<Node, ArrayList<String>>();
+    	
+    	durationMap = new HashMap<String, Integer>();
+    	parentMap = new HashMap<String, ArrayList<String>>();
     }
     
-    public int add_nodes(String name, int duration, ArrayList<String> parents) {
+    /**
+     * Add a new node to the network.
+     * @param name
+     * @param duration
+     * @param parents
+     * @return error code
+     */
+    public int add_node(String name, int duration, ArrayList<String> parents) {
     	Node node = new Node(name, duration);
-    	if(nodesMap.get(node) == null) {
-    		nodesMap.put(node, parents);
-    	}
-    	else {
+    	
+    	//Check if node already exists
+    	if(durationMap.get(name) != null) {
     		return error.duplicate_node;
     	}
+    	
+    	//Check for start node
+    	else if(parents.isEmpty()) {
+    		if(start == null) {
+    			start = node; //Placeholder node to indicate start node exists
+    			parentMap.put(name, parents);
+    		}
+    		else {
+    			return error.multiple_start_nodes;
+    		}
+    	}
+    	//Add node info to data structures
+		durationMap.put(name, duration);
+		System.out.println("Name: "+ name + " Parents: "+parents.toString());
+		parentMap.put(name, parents);
+		nodeNames.add(name);
+		parentSet.addAll(parents);
+		nodeMap.put(name, node);
+		//size++;
+		
     	return error.no_error;
     }
     
     
+    /**
+     * Build the network. If an error is encountered then network building will be aborted and an error code returned.
+     * @return error code
+     */
     public int build_network() {
+    	System.out.println("Network size: " + nodeMap.size());
     	int errorCode = error.no_error;
     	
+    	//Check for reference to nonexistent parent
+    	for(String parent : parentSet) {
+    		if(!nodeNames.contains(parent)) {
+    			clear();
+    			System.out.println("invalid_parent_reference");
+    			return error.invalid_parent_reference;
+    		}
+    	}
     	
+    	// Find end node
+    	for(String nodeName : nodeNames) {
+    		if(!parentSet.contains(nodeName)) {
+    			if(end == null) {//make sure there is no other end node set
+    				end = nodeMap.get(nodeName);
+    			}
+    			else {//An end node already exists!
+    				clear();
+    				System.out.println("multiple_end_nodes");
+    				return error.multiple_end_nodes;
+    			}
+    		}
+    	}
+    	
+    	//Recursively link nodes starting from end node
+    	System.out.println("End node: "+end);
+    	build_links(end);
+    	
+    	
+    	//Build paths for the start node
+    	ArrayList<Path> pathList = new ArrayList<Path>();
+    	for(Node child: start.get_children()) {
+    		Path path = new Path();
+        	path.append_node(start);
+        	path.append_node(child);
+        	pathList.add(path);
+        	paths.add(path);
+        	pathMap.put(child, pathList);
+    	}
+    	pathMap.put(start, pathList);
+    	
+    	for(Node child: start.get_children()) {
+    		build_paths(child);
+    	}
+    	
+    	
+    	
+    	System.out.println("Build netowrk error code: " + errorCode);
     	return errorCode;
     }
-    /**
+    
+    private void build_links(Node childNode) {
+    	System.out.println("build_links: childNode = "+childNode);
+    	//Recursively build linked network backwards from the end node
+    	
+    	//End case
+    	if(childNode.get_name() == start.get_name()) {
+    		System.out.println("build_links: found start node");
+    		return;
+    	}
+    	for(String parentName : parentMap.get(childNode.get_name())) {
+//    		if(parentName == start.get_name()) {
+//    			start.add_child(childNode);
+//    			return;
+//    		}
+    		Node parentNode = nodeMap.get(parentName);
+    		parentNode.add_child(childNode);
+    		build_links(parentNode);
+    	}
+    	return;
+    	
+    	
+//    	//Look for nodes that are children of current node
+//    	ArrayList<String> childNodes = findChildren(currentNode.get_name());
+//    	//Link them with current node
+//    	for(String child : childNodes) {
+//    		Node childNode = new Node(child, durationMap.get(child));
+//    		currentNode.add_child(childNode);
+//    		build_links(childNode);
+//    	}
+//    	
+    	
+    	
+    }
+    
+    private int build_paths(Node node) {
+		// TODO Auto-generated method stub
+		int errorCode = error.no_error;
+		ArrayList<Path> pathList = pathMap.get(node);
+		
+		// Check if node == end node; return if true
+		
+		if(node == end) {
+			return errorCode;
+		}
+		else {
+			//Add first child node
+			Node child = node.get_children().get(0);
+			for(Path path : pathList) {
+				path.append_node(child);
+				pathMap.put(child, pathList);
+			}
+			
+			//Loop through other nodes
+			ArrayList<Node> children = node.get_children();
+			//Loop through each child ignoring the first child
+			for(int i = 1;i <  children.size(); i++) {
+				Path newPath = new Path();
+				//For each path that node is in, create new path with children[i] appended
+				for(Path path : pathList) {
+					newPath.set_path(path.get_path());
+					newPath.append_node(children.get(i));
+				}
+				
+			}
+		}
+		
+	
+		return errorCode;
+		
+		
+//		ArrayList<Path> emptyList = new ArrayList<>();
+//		pathMap.put(node, emptyList);
+//		
+//		return update_paths(node, parentMap.get(node.get_name()));
+	}
+
+	private ArrayList<String> findChildren(String parentName) {
+		// TODO Auto-generated method stub
+    	
+    	ArrayList<String> children = new ArrayList<String>(); //child nodes to return
+    	ArrayList<String> parents = new ArrayList<String>(); //parents of current searched node
+    	String currentNode;
+    	
+    	for(int i = 0; i < nodeNames.size(); i++) {
+    		currentNode = nodeNames.get(i);
+    		parents.clear();
+    		parents.addAll(parentMap.get(currentNode)); //Load parent list of current node
+    		
+    		for(int j = 0; j < parents.size(); j++) { //Loop through parents list looking for parentName
+    			if(parents.get(j).equals(parentName)) {//Match!
+    				children.add(currentNode); //Add current node as child of parentName
+    			}
+    		}
+    	}
+    	return children;
+		
+	}
+
+	/**
      * @param name
      * @param duration
      * @param parents
      * @return an error code associated with Errors.java
      */
-    private int add_node(String name, int duration, ArrayList<String> parents) {
-    	if (map.containsKey(name)) {
+    private int add_node_to_network(String name, int duration, ArrayList<String> parents) {
+    	if (nodeMap.containsKey(name)) {
     		return error.duplicate_node;
     	}
+    	//Create new node object
     	Node node = new Node(name, duration);
+    	
+    	//Check for start node
     	if(parents.isEmpty()) {
     		//If parents is empty then assume this node is the start node.
         	//If there is already a start node throw an error.
     		if(start == null) { //Check if start node is empty
     			start = node;
     		}else { //It already exists, can't have multiple start nodes!
-    			//TODO
     			return error.orphaned_node;
     		}
     	}
     	else {//add child node to parent node
     		for(int i=0; i < parents.size(); i++) {
     			//Use map to find each parent node and add the current node as their child
-    			map.get(parents.get(i)).add_child(node);
+    			nodeMap.get(parents.get(i)).add_child(node);
     		}
     	}
-    	map.put(name, node); //Add new node to map
+    	nodeMap.put(name, node); //Add new node to map
     	ArrayList<Path> emptyList = new ArrayList<>();
     	pathMap.put(node, emptyList); //Add new node to pathMap
-    	size++; //Increment network size
+    	//size++; //Increment network size
     	return update_paths(node, parents);
     	
     	//TODO
     }
     /**
      * @param node to evaluate
-     * @param Arraylisy containing parent nodes of node
+     * @param Arraylist containing parent nodes of node
      * @return an error code associated with Errors.java
      */
     private int update_paths(Node node, ArrayList<String> parents) {
@@ -105,7 +291,7 @@ public class Network {
     	
     	//Loop through parent nodes, adding relevant paths to localPaths set
     	for(int i=0; i<parents.size();i++) {
-    		Node parent_node = map.get(parents.get(i)); //Get the parent node object
+    		Node parent_node = nodeMap.get(parents.get(i)); //Get the parent node object
     		if(parent_node == start) { //Check if parent is start node
     			//Build new path and add to localPaths list
     			Path path = new Path();
@@ -166,17 +352,32 @@ public class Network {
      * Note this does not do any sanity checking and may leave the network in a broken state.
      */
     private void remove_node(Node node) {
-    	map.remove(node); //Remove new node to map
+    	nodeMap.remove(node); //Remove new node to map
     	pathMap.remove(node); //Remove new node to pathMap
-    	size--; //Decrement network size
+    	//size--; //Decrement network size
     }
     
-    public Node get_node(String name) {
-    	return map.get(name);
+    private void clear() {
+		// clear network contents
+    	//size = 0;
+    	paths.clear();
+    	start = null;
+    	end = null;
+    	nodeMap.clear();
+    	pathMap.clear();
+    	nodeNames.clear();
+    	parentSet.clear();
+    	durationMap.clear();
+    	parentMap.clear();
+		
+	}
+
+	public Node get_node(String name) {
+    	return nodeMap.get(name);
     }
     
     public boolean isEmpty() {
-    	return size == 0;
+    	return nodeMap.size() == 0;
     }
     
     /**
@@ -221,14 +422,14 @@ public class Network {
      */
     public void printInfo() {
     	System.out.println("Network Debug Info:\n");
-    	System.out.println("Network size: " + size);
-    	System.out.println("Start node: " + start.get_name());
-    	System.out.println("End node: " + end.get_name());
+    	System.out.println("Network size: " + nodeMap.size());
+    	System.out.println("Start node: " + start);
+    	System.out.println("End node: " + end);
     	
     	// Print each node
     	System.out.println("Nodes: [NodeName(Duration): Child1, Child2, Child3]\n");
-    	System.out.println("Start node: " + start.get_name()+ "[" + start + "]\n");
-    	for(HashMap.Entry<String, Node> pair: map.entrySet()) {
+    	//System.out.println("Start node: " + start.get_name()+ "[" + start + "]\n");
+    	for(HashMap.Entry<String, Node> pair: nodeMap.entrySet()) {
     		Node node = pair.getValue();
     		String output = "•"; //Create output string
     		output += node.get_name(); //Add name
@@ -268,11 +469,11 @@ public class Network {
      */
     public void printMap() {
     	System.out.println("Map:");
-    	for (String name: map.keySet()){
+    	for (String name: nodeMap.keySet()){
 
             String key = name.toString();
-            String value = map.get(name).get_name();  
-            System.out.println(key + " -> " + value + "(" + map.get(name)+")");  
+            String value = nodeMap.get(name).get_name();  
+            System.out.println(key + " -> " + value + "(" + nodeMap.get(name)+")");  
     	} 
     	System.out.println("\n");
 	}
@@ -300,6 +501,13 @@ public class Network {
 		System.out.println(paths.toString() + "\n");
 	}
     
+	public void printDataStructures() {
+		printMap();
+		printPathMap();
+		printPaths();
+		System.out.println("Parent set: " + parentSet.toString());
+		System.out.println("Parent Map: " + parentMap.toString());
+	}
 // The following methods are lower priority as they are not necessary for phase 1.
     
 //    public void insert_node(String name, int duration, ArrayList<String> parents, ArrayList<String> children) {

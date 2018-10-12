@@ -23,7 +23,7 @@ public class Path {
     }
 
     //allows a path to be passed in and set as the current path
-    public void set_path(ArrayList<Path> nodeList) {
+    public void set_path(ArrayList<Node> nodeList) {
         path = (ArrayList)nodeList.clone();
     }
 
