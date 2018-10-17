@@ -1,0 +1,54 @@
+.org 0x10000000
+li $sp, 0x10fffffc  # Stack pointer initialization
+li $s0, sseg_lut    # Lookup table address used by sseg_display
+lui $s1, 0xf070 # Interrupt controller register
+lui $s2, 0xf0a0 # Seven segment display
+li $s3, 0xf0200000   #LED address
+li $s4, 0xf0600000   #timer
+
+# ****************************
+# TODO: enable interrupts here
+# **************************** 
+li $t5, 0xffffff37
+sw $t5, 0($s4) #sets the timer to ~200 cycles less than the overflow value
+
+li $t4, 3 #value for enabling both the timer interrupt and global interrupt bit
+sw $t4, 0($s1) #interrupts can now be triggered
+
+li $iv, isr #pointer to isr loaded into the interrupt vector
+
+main:
+jal sseg_display
+    nop
+    addiu $a0, $a0, 1
+    j main
+    nop
+# ****************************************
+# TODO: add interrupt service routine here
+# ****************************************
+isr:
+ 
+  sw $zero, 4($s1) #clears the handled interrupt
+  lw $i1, 0($s1) #gets the mask register
+  ori $i1, $i1, 1 #global interrupt enable
+
+  #set timer to 200 cycles before overflow
+  li $t5, 0xffffff37
+  sw $t5, 0($s4)
+
+  #determine if LED is on or off
+  lw $t8, 0($s3) #current val of LEDs loaded into $t8
+  li $t6, 255
+  beq $t8, $zero, activate_LED
+  beq $t8, $t6, deactivate_LED
+
+  activate_LED:
+    sw $t6, 0($s3) #turns on all LEDS
+    jr $ir
+    sw $i1, 0($s1) # store the mask register in the delay slot to guarantee proper exit
+  deactivate_LED:
+    sw $zero, 0($s3) #turns off LEDs
+    jr $ir
+    sw $i1, 0($s1) # store the mask register in the delay slot to guarantee proper exit
+
+  
